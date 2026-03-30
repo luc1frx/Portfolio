@@ -8,30 +8,62 @@ const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 
 (function initLoader() {
   const loader = document.getElementById('loader');
   const particles = document.getElementById('loader-particles');
+  const progressText = document.getElementById('progress-text');
   if (!loader) return;
+
+  // Animate progress text
+  let progress = 0;
+  const progressInterval = setInterval(() => {
+    progress += Math.random() * 15 + 5;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(progressInterval);
+    }
+    if (progressText) progressText.textContent = Math.floor(progress) + '%';
+  }, 100);
 
   // Create floating particles
   if (particles) {
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 40; i++) {
       const p = document.createElement('div');
       p.className = 'loader-particle';
-      p.style.left = Math.random() * 100 + '%';
-      p.style.animationDelay = Math.random() * 6 + 's';
-      p.style.animationDuration = (Math.random() * 3 + 4) + 's';
-      const colors = ['#7c5cfc', '#c084fc', '#e040fb', '#00e5ff'];
-      p.style.background = colors[Math.floor(Math.random() * colors.length)];
-      p.style.boxShadow = `0 0 6px ${colors[Math.floor(Math.random() * colors.length)]}`;
+      p.style.cssText = `
+        position: absolute;
+        width: ${Math.random() * 4 + 2}px;
+        height: ${Math.random() * 4 + 2}px;
+        background: #7c5cfc;
+        border-radius: 50%;
+        left: ${Math.random() * 100}%;
+        top: ${Math.random() * 100}%;
+        opacity: ${Math.random() * 0.5 + 0.3};
+        animation: particleFloat ${Math.random() * 4 + 3}s ease-in-out infinite;
+        animation-delay: ${Math.random() * 3}s;
+        box-shadow: 0 0 8px rgba(124,92,252,0.6);
+      `;
       particles.appendChild(p);
     }
   }
 
-  // Hide loader after timeout (fallback)
+  // Hide loader after timeout
   setTimeout(() => {
-    loader.classList.add('hidden');
-    document.body.style.overflow = '';
-  }, 3000);
+    if (progressText) progressText.textContent = '100%';
+    setTimeout(() => {
+      loader.classList.add('hidden');
+      document.body.style.overflow = '';
+    }, 200);
+  }, 2800);
 })();
 document.body.style.overflow = 'hidden';
+
+// Add particle animation if not exists
+const styleSheet = document.createElement('style');
+styleSheet.textContent = `
+  @keyframes particleFloat {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+    50% { transform: translateY(-30px) scale(1.2); opacity: 0.7; }
+  }
+`;
+document.head.appendChild(styleSheet);
 
 // ============================================================
 // GLOWING CURSOR (Desktop only)
