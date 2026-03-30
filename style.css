@@ -36,8 +36,9 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   display: flex;
   flex-direction: column;
   line-height: 0.88;
-  text-decoration: none;
+  cursor: default;
   position: relative;
+  text-decoration: none;
 }
 .logo-vv .line1 {
   font-family: 'Russo One', sans-serif;
@@ -50,6 +51,21 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   background-clip: text;
   filter: drop-shadow(0 0 8px rgba(168,85,247,0.4));
   transition: filter 0.3s;
+  position: relative;
+}
+.logo-vv .line1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shine 3s infinite;
+}
+@keyframes shine {
+  0% { left: -100%; }
+  50%, 100% { left: 200%; }
 }
 .logo-vv .line2 {
   font-family: 'Russo One', sans-serif;
@@ -75,11 +91,13 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 .logo-vv:hover .line1 { filter: drop-shadow(0 0 18px rgba(192,132,252,0.8)); }
 .logo-vv:hover .line2 { opacity: 1; filter: drop-shadow(0 0 12px rgba(168,85,247,0.6)); }
 
-/* Loader logo size */
+/* Logo sizes for different places */
+.nav-logo .logo-vv .line1,
+.nav-logo .logo-vv .line2 { font-size: 22px; }
 .loader-logo .logo-vv .line1,
-.loader-logo .logo-vv .line2 { font-size: 48px; }
+.loader-logo .logo-vv .line2 { font-size: 52px; }
 .footer-logo-vv .line1,
-.footer-logo-vv .line2 { font-size: 36px; }
+.footer-logo-vv .line2 { font-size: 32px; }
 
 body {
   background: var(--bg-dark);
@@ -1560,37 +1578,16 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
   .hamburger {
     display: flex;
     z-index: 1001;
-    border-radius: 10px;
+    border-radius: 8px;
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
-    transition: background 0.3s ease, transform 0.3s ease;
+    transition: background 0.3s ease;
   }
   .hamburger:hover {
     background: rgba(124,92,252,0.2);
-    transform: scale(1.05);
   }
-  .hamburger span {
+  .hamburger .bar {
     width: 22px;
-  }
-  .hamburger span::before,
-  .hamburger span::after {
-    width: 22px;
-    transform: translate(-50%, calc(-50% - 6px));
-  }
-  .hamburger span::after {
-    transform: translate(-50%, calc(-50% + 6px));
-  }
-
-  /* Hamburger Open State */
-  /* Hamburger Open State */
-  .hamburger.active .bar:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-  }
-  .hamburger.active .bar:nth-child(2) {
-    opacity: 0;
-  }
-  .hamburger.active .bar:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
   }
 
   .hero { padding: 100px 16px 60px; min-height: 100svh; }
