@@ -448,17 +448,34 @@ if (!isTouchDevice) {
 }
 
 // ============================================================
-// 3D TILT CARDS (Desktop only)
+// SMOOTH 3D TILT CARDS (Desktop only)
 // ============================================================
 if (!isTouchDevice) {
-  document.querySelectorAll('.skill-card, .timeline-card, .edu-card').forEach(card => {
+  const tiltCards = document.querySelectorAll('.skill-card, .timeline-card, .edu-card, .bento-card, .contact-item, .float-card');
+  const tiltSettings = { strength: 6, scale: 1.03 };
+
+  tiltCards.forEach(card => {
+    card.style.transition = 'transform 0.15s ease-out, box-shadow 0.3s ease, border-color 0.3s ease';
+
     card.addEventListener('mousemove', e => {
       const rect = card.getBoundingClientRect();
-      const rx = ((e.clientY - rect.top - rect.height / 2) / (rect.height / 2)) * -5;
-      const ry = ((e.clientX - rect.left - rect.width / 2) / (rect.width / 2)) * 5;
-      card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -tiltSettings.strength;
+      const rotateY = ((x - centerX) / centerX) * tiltSettings.strength;
+
+      requestAnimationFrame(() => {
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${tiltSettings.scale}, ${tiltSettings.scale}, ${tiltSettings.scale})`;
+      });
     });
-    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+
+    card.addEventListener('mouseleave', () => {
+      requestAnimationFrame(() => {
+        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      });
+    });
   });
 }
 
