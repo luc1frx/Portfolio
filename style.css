@@ -35,7 +35,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 .logo-vv {
   display: inline-flex;
   flex-direction: column;
-  line-height: 1.1;
+  line-height: 1.3;
   cursor: default;
   text-decoration: none;
 }
@@ -50,7 +50,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   -webkit-text-fill-color: transparent;
   color: #a855f7;
   filter: drop-shadow(0 0 8px rgba(168,85,247,0.4));
-  transition: filter 0.3s;
+  animation: logoGlow 3s ease-in-out infinite;
 }
 .logo-vv .line2 {
   font-family: 'Russo One', sans-serif;
@@ -63,14 +63,16 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   color: transparent;
   opacity: 0.85;
   filter: drop-shadow(0 0 6px rgba(168,85,247,0.3));
-  transition: filter 0.3s, opacity 0.3s;
+  animation: logoGlow2 3s ease-in-out infinite;
+  animation-delay: 1.5s;
 }
-.logo-vv:hover .line1 {
-  filter: drop-shadow(0 0 18px rgba(192,132,252,0.8));
+@keyframes logoGlow {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(168,85,247,0.4)); }
+  50% { filter: drop-shadow(0 0 18px rgba(192,132,252,0.7)); }
 }
-.logo-vv:hover .line2 {
-  opacity: 1;
-  filter: drop-shadow(0 0 12px rgba(168,85,247,0.6));
+@keyframes logoGlow2 {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(168,85,247,0.3)); opacity: 0.85; }
+  50% { filter: drop-shadow(0 0 14px rgba(192,132,252,0.5)); opacity: 1; }
 }
 
 /* Logo sizes for different places */
