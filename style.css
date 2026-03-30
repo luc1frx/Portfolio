@@ -33,9 +33,9 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
 /* ── Logo VV ── */
 .logo-vv {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
-  line-height: 1;
+  line-height: 1.1;
   cursor: default;
   text-decoration: none;
 }
@@ -43,34 +43,34 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   font-family: 'Russo One', sans-serif;
   font-size: 28px;
   font-style: italic;
-  letter-spacing: 2px;
-  background: linear-gradient(135deg, #e8e8e8 0%, #ffffff 50%, #d4a5ff 100%);
+  letter-spacing: -1px;
+  background: linear-gradient(120deg, #e2e2e2 30%, #a855f7 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: #fff;
-  text-shadow: 0 0 20px rgba(168,85,247,0.5);
-  transition: all 0.3s;
+  color: #a855f7;
+  filter: drop-shadow(0 0 8px rgba(168,85,247,0.4));
+  transition: filter 0.3s;
 }
 .logo-vv .line2 {
   font-family: 'Russo One', sans-serif;
   font-size: 28px;
   font-style: italic;
-  letter-spacing: 2px;
-  color: #a855f7;
-  text-shadow: 0 0 15px rgba(168,85,247,0.6);
-  -webkit-text-stroke: 0.5px rgba(168,85,247,0.5);
-  transition: all 0.3s;
+  letter-spacing: -1px;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.5px #a855f7;
+  background: transparent;
+  color: transparent;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 6px rgba(168,85,247,0.3));
+  transition: filter 0.3s, opacity 0.3s;
 }
 .logo-vv:hover .line1 {
-  background: linear-gradient(135deg, #ffffff 0%, #d4a5ff 50%, #c084fc 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  text-shadow: 0 0 30px rgba(192,132,252,0.8);
+  filter: drop-shadow(0 0 18px rgba(192,132,252,0.8));
 }
 .logo-vv:hover .line2 {
-  color: #c084fc;
-  text-shadow: 0 0 25px rgba(192,132,252,0.8);
+  opacity: 1;
+  filter: drop-shadow(0 0 12px rgba(168,85,247,0.6));
 }
 
 /* Logo sizes for different places */
