@@ -45,8 +45,6 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   font-style: italic;
   letter-spacing: -1px;
   color: #ffffff;
-  -webkit-text-stroke: 1.5px rgba(168,85,247,0.8);
-  text-shadow: 0 0 10px rgba(168,85,247,0.3);
 }
 .logo-vv .line2 {
   font-family: 'Russo One', sans-serif;
@@ -55,7 +53,6 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   letter-spacing: -1px;
   -webkit-text-stroke: 1.5px #a855f7;
   color: transparent;
-  text-shadow: 0 0 10px rgba(168,85,247,0.3);
 }
 .logo-vv .line1 {
   font-family: 'Russo One', sans-serif;
