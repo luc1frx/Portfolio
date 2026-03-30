@@ -10,9 +10,6 @@ const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 
   const particles = document.getElementById('loader-particles');
   if (!loader) return;
 
-  // Add expanding rings
-  const content = loader.querySelector('.loader-content');
-  if (content) {
   // Create floating particles
   if (particles) {
     for (let i = 0; i < 30; i++) {
@@ -28,13 +25,11 @@ const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 
     }
   }
 
-  // Hide loader after content loads
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      loader.classList.add('hidden');
-      document.body.style.overflow = '';
-    }, 2800);
-  });
+  // Hide loader after timeout (fallback)
+  setTimeout(() => {
+    loader.classList.add('hidden');
+    document.body.style.overflow = '';
+  }, 3000);
 })();
 document.body.style.overflow = 'hidden';
 
