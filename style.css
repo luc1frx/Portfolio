@@ -444,7 +444,7 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0;
+  gap: 6px;
   background: none;
   border: none;
   cursor: none;
@@ -453,27 +453,48 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
   width: 44px;
   height: 44px;
 }
-.hamburger span,
-.hamburger span::before,
-.hamburger span::after {
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+.hamburger span::before {
+  content: '';
   display: block;
   width: 24px;
   height: 2px;
   background: var(--text-primary);
   border-radius: 2px;
   position: absolute;
-  transition: transform 0.35s ease, opacity 0.35s ease;
-}
-.hamburger span {
-  background: transparent;
-}
-.hamburger span::before {
-  content: '';
-  transform: translateY(-7px);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, calc(-50% - 7px));
+  transition: transform 0.35s ease;
 }
 .hamburger span::after {
   content: '';
-  transform: translateY(7px);
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, calc(-50% + 7px));
+  transition: transform 0.35s ease;
+}
+.hamburger.active span {
+  background: transparent;
+}
+.hamburger.active span::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.hamburger.active span::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 /* ============================================================
@@ -1444,7 +1465,11 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
   .navbar.scrolled { padding: 10px 24px; }
   .about-grid { grid-template-columns: 1fr; gap: 40px; }
   .about-visual { display: flex; justify-content: center; }
+  .about-content { text-align: center; }
   .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  .contact-form { text-align: center; }
+  .contact-form .btn { margin: 0 auto; }
+  .about-content .btn { margin: 0 auto; }
   .bento-grid { grid-template-columns: 1fr; }
   .bento-large { min-height: 360px; padding: 32px; }
   .bento-side { gap: 20px; }
@@ -1511,6 +1536,29 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
     transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .hamburger:hover {
+    background: rgba(124,92,252,0.2);
+    transform: scale(1.05);
+  }
+  .hamburger span {
+    width: 22px;
+  }
+  .hamburger span::before,
+  .hamburger span::after {
+    width: 22px;
+    transform: translate(-50%, calc(-50% - 6px));
+  }
+  .hamburger span::after {
+    transform: translate(-50%, calc(-50% + 6px));
+  }
+
+  /* Hamburger Open State */
+  .hamburger.active span::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  .hamburger.active span::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
   }
   .hamburger:hover {
     background: rgba(124,92,252,0.2);
@@ -1696,11 +1744,12 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
   .edu-degree { font-size: 0.88rem; }
   .edu-institute { font-size: 0.78rem; }
 
-  .contact-form { padding: 16px; border-radius: 12px; }
+  .contact-form { padding: 16px; border-radius: 12px; text-align: center; }
   .form-group input, .form-group textarea { padding: 14px 12px; border-radius: 10px; }
-  .btn-primary#form-submit { width: 100%; max-width: 300px; display: flex; justify-content: center; margin: 0 auto; }
-  #about-email-btn { width: 100%; max-width: 300px; display: flex; justify-content: center; margin: 0 auto; }
-  .about-content { text-align: center; }
+  .btn-primary#form-submit { padding: 16px 24px; }
+  #about-email-btn { width: 100%; max-width: 300px; display: flex !important; justify-content: center; margin: 0 auto; }
+  .about-content { text-align: center; padding: 0 10px; }
+  .about-content .btn { margin: 0 auto; }
   .nav-logo svg { width: 140px; height: 36px; }
   .nav-logo { display: flex; align-items: center; }
   .navbar .hamburger { flex-shrink: 0; }
