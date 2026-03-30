@@ -1,6 +1,20 @@
 /* ===== SCRIPT.JS – VARUN VERMA PORTFOLIO (Clean Premium) ===== */
 
 // ============================================================
+// PRELOADER
+// ============================================================
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  const progress = document.querySelector('.preloader-progress');
+  
+  progress.style.width = '100%';
+  
+  setTimeout(() => {
+    preloader.classList.add('hidden');
+  }, 800);
+});
+
+// ============================================================
 // GLOWING CURSOR
 // ============================================================
 const cursor = document.getElementById('cursor');
