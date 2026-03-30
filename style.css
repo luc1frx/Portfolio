@@ -31,6 +31,56 @@
 
 html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
+/* ── Logo VV ── */
+.logo-vv {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.88;
+  text-decoration: none;
+  position: relative;
+}
+.logo-vv .line1 {
+  font-family: 'Russo One', sans-serif;
+  font-size: 28px;
+  font-style: italic;
+  letter-spacing: -1px;
+  background: linear-gradient(120deg, #e2e2e2 30%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 8px rgba(168,85,247,0.4));
+  transition: filter 0.3s;
+}
+.logo-vv .line2 {
+  font-family: 'Russo One', sans-serif;
+  font-size: 28px;
+  font-style: italic;
+  letter-spacing: -1px;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.5px #a855f7;
+  opacity: 0.75;
+  transition: opacity 0.3s, filter 0.3s;
+  filter: drop-shadow(0 0 6px rgba(168,85,247,0.25));
+}
+.logo-vv::after {
+  content: '';
+  position: absolute;
+  right: -10px;
+  top: 8px;
+  width: 3px;
+  height: 80%;
+  background: linear-gradient(180deg, #a855f7, transparent);
+  border-radius: 2px;
+}
+.logo-vv:hover .line1 { filter: drop-shadow(0 0 18px rgba(192,132,252,0.8)); }
+.logo-vv:hover .line2 { opacity: 1; filter: drop-shadow(0 0 12px rgba(168,85,247,0.6)); }
+
+/* Loader logo size */
+.loader-logo .logo-vv .line1,
+.loader-logo .logo-vv .line2 { font-size: 48px; }
+.footer-logo-vv .line1,
+.footer-logo-vv .line2 { font-size: 36px; }
+
 body {
   background: var(--bg-dark);
   color: var(--text-primary);
@@ -422,8 +472,10 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
   box-shadow: 0 4px 30px rgba(0,0,0,0.4);
   padding: 12px 48px;
 }
-.nav-logo svg {
-  display: block;
+.nav-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 .nav-links { display: flex; list-style: none; gap: 6px; }
 .nav-link {
@@ -439,62 +491,40 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
   color: var(--text-primary);
   background: rgba(124,92,252,0.15);
 }
+
+/* ── Hamburger Menu ── */
 .hamburger {
   display: none;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  gap: 6px;
+  align-items: center;
+  gap: 5px;
   background: none;
   border: none;
-  cursor: none;
+  cursor: pointer;
   padding: 8px;
+  width: 40px;
+  height: 40px;
   position: relative;
-  width: 44px;
-  height: 44px;
+  z-index: 1001;
 }
-.hamburger span {
-  display: block;
+.hamburger .bar {
   width: 24px;
   height: 2px;
   background: var(--text-primary);
   border-radius: 2px;
-  transition: transform 0.35s ease, opacity 0.35s ease;
+  transition: all 0.3s ease;
+  position: relative;
 }
-.hamburger span::before {
-  content: '';
-  display: block;
-  width: 24px;
-  height: 2px;
-  background: var(--text-primary);
-  border-radius: 2px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, calc(-50% - 7px));
-  transition: transform 0.35s ease;
+.hamburger.active .bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
 }
-.hamburger span::after {
-  content: '';
-  display: block;
-  width: 24px;
-  height: 2px;
-  background: var(--text-primary);
-  border-radius: 2px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, calc(-50% + 7px));
-  transition: transform 0.35s ease;
+.hamburger.active .bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
 }
-.hamburger.active span {
-  background: transparent;
-}
-.hamburger.active span::before {
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-.hamburger.active span::after {
-  transform: translate(-50%, -50%) rotate(-45deg);
+.hamburger.active .bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 /* ============================================================
@@ -1334,11 +1364,9 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
   position: relative;
   z-index: 1;
 }
-.footer-logo {
-  margin-bottom: 12px;
-}
-.footer-logo svg {
-  display: block;
+.footer-logo-vv {
+  display: inline-block;
+  margin-bottom: 16px;
 }
 .footer-text {
   color: var(--text-secondary);
@@ -1554,46 +1582,15 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
   }
 
   /* Hamburger Open State */
-  .hamburger.active span::before {
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
-  .hamburger.active span::after {
-    transform: translate(-50%, -50%) rotate(-45deg);
-  }
-  .hamburger:hover {
-    background: rgba(124,92,252,0.2);
-    transform: scale(1.05);
-  }
-  .hamburger span,
-  .hamburger span::before,
-  .hamburger span::after {
-    width: 22px;
-  }
-  .hamburger span::before {
-    transform: translateY(-6px);
-  }
-  .hamburger span::after {
-    transform: translateY(6px);
-  }
-
   /* Hamburger Open State */
-  .hamburger.active span::before {
-    transform: translateY(0) rotate(45deg);
-    background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+  .hamburger.active .bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
   }
-  .hamburger.active span::after {
-    transform: translateY(0) rotate(-45deg);
-    background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
   }
-
-  /* Nav overlay backdrop */
-  .nav-links.open::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle at 50% 30%, rgba(124,92,252,0.15) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: -1;
+  .hamburger.active .bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
   }
 
   .hero { padding: 100px 16px 60px; min-height: 100svh; }
@@ -1750,15 +1747,13 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
   #about-email-btn { width: 100%; max-width: 300px; display: flex !important; justify-content: center; margin: 0 auto; }
   .about-content { text-align: center; padding: 0 10px; }
   .about-content .btn { margin: 0 auto; }
-  .nav-logo svg { width: 140px; height: 36px; }
-  .nav-logo { display: flex; align-items: center; }
-  .navbar .hamburger { flex-shrink: 0; }
 
   .floating-dock { bottom: 16px; right: 12px; }
   .dock-toggle { padding: 10px 18px; font-size: 0.88rem; border-radius: 24px; }
   .dock-icon { width: 42px; height: 42px; }
 
-  .footer-logo { font-size: 1.6rem; }
+  .footer-logo-vv .line1,
+  .footer-logo-vv .line2 { font-size: 28px; }
   .footer-text { font-size: 0.82rem; }
 }
 
