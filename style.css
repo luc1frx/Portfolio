@@ -44,13 +44,13 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   font-size: 28px;
   font-style: italic;
   letter-spacing: -1px;
-  background: linear-gradient(90deg, #ffffff, #c084fc, #a855f7, #ffffff);
-  background-size: 300% 100%;
+  background: linear-gradient(120deg, #ffffff 0%, #c084fc 50%, #a855f7 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: #c084fc;
-  animation: logoShine 3s ease-in-out infinite;
+  filter: brightness(1) drop-shadow(0 0 8px rgba(168,85,247,0.5));
+  animation: logoGlow 2.5s ease-in-out infinite;
 }
 .logo-vv .line2 {
   font-family: 'Russo One', sans-serif;
@@ -60,18 +60,17 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 1.5px #a855f7;
   color: transparent;
-  animation: logoShine2 3s ease-in-out infinite;
-  animation-delay: 1.5s;
+  filter: drop-shadow(0 0 5px rgba(168,85,247,0.4));
+  animation: logoGlow2 2.5s ease-in-out infinite;
+  animation-delay: 0.3s;
 }
-@keyframes logoShine {
-  0% { background-position: 0% 50%; text-shadow: 0 0 10px rgba(168,85,247,0.5); }
-  50% { background-position: 100% 50%; text-shadow: 0 0 25px rgba(192,132,252,1), 0 0 40px rgba(168,85,247,0.5); }
-  100% { background-position: 0% 50%; text-shadow: 0 0 10px rgba(168,85,247,0.5); }
+@keyframes logoGlow {
+  0%, 100% { filter: brightness(1) drop-shadow(0 0 8px rgba(168,85,247,0.4)); }
+  50% { filter: brightness(1.15) drop-shadow(0 0 18px rgba(192,132,252,0.7)); }
 }
-@keyframes logoShine2 {
-  0% { text-shadow: 0 0 5px rgba(168,85,247,0.3); opacity: 0.7; }
-  50% { text-shadow: 0 0 20px rgba(192,132,252,0.8), 0 0 35px rgba(168,85,247,0.4); opacity: 1; }
-  100% { text-shadow: 0 0 5px rgba(168,85,247,0.3); opacity: 0.7; }
+@keyframes logoGlow2 {
+  0%, 100% { filter: drop-shadow(0 0 5px rgba(168,85,247,0.3)); }
+  50% { filter: drop-shadow(0 0 15px rgba(192,132,252,0.6)); }
 }
 
 /* Nav logo */
