@@ -38,8 +38,24 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   cursor: default;
   text-decoration: none;
   line-height: 1;
-  position: relative;
-  overflow: visible;
+}
+.logo-vv .line1 {
+  font-family: 'Russo One', sans-serif;
+  font-size: 28px;
+  font-style: italic;
+  letter-spacing: -1px;
+  color: #ffffff;
+  -webkit-text-stroke: 1.5px rgba(168,85,247,0.8);
+  text-shadow: 0 0 10px rgba(168,85,247,0.3);
+}
+.logo-vv .line2 {
+  font-family: 'Russo One', sans-serif;
+  font-size: 28px;
+  font-style: italic;
+  letter-spacing: -1px;
+  -webkit-text-stroke: 1.5px #a855f7;
+  color: transparent;
+  text-shadow: 0 0 10px rgba(168,85,247,0.3);
 }
 .logo-vv .line1 {
   font-family: 'Russo One', sans-serif;
@@ -249,13 +265,58 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: loaderLogoPulse 2s ease-in-out infinite;
   position: relative;
   z-index: 3;
 }
-@keyframes loaderLogoPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+.logo-orbs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 120px;
+  pointer-events: none;
+}
+.logo-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(8px);
+}
+.logo-orb-1 {
+  width: 20px;
+  height: 20px;
+  background: rgba(124,92,252,0.8);
+  top: 10%;
+  left: -30px;
+  animation: logoOrbFloat1 3s ease-in-out infinite;
+}
+.logo-orb-2 {
+  width: 15px;
+  height: 15px;
+  background: rgba(224,64,251,0.7);
+  bottom: 10%;
+  right: -25px;
+  animation: logoOrbFloat2 2.5s ease-in-out infinite;
+}
+.logo-orb-3 {
+  width: 12px;
+  height: 12px;
+  background: rgba(0,229,255,0.6);
+  top: 50%;
+  right: -40px;
+  animation: logoOrbFloat3 2s ease-in-out infinite;
+}
+@keyframes logoOrbFloat1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(10px, -15px); }
+}
+@keyframes logoOrbFloat2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-12px, 10px); }
+}
+@keyframes logoOrbFloat3 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(8px, 8px); }
 }
 .loader-bar-container {
   width: 160px;
