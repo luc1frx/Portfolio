@@ -13,25 +13,17 @@ const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 
   // Add expanding rings
   const content = loader.querySelector('.loader-content');
   if (content) {
-    for (let i = 0; i < 3; i++) {
-      const ring = document.createElement('div');
-      ring.className = 'loader-ring';
-      content.appendChild(ring);
-    }
-  }
-
   // Create floating particles
   if (particles) {
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 30; i++) {
       const p = document.createElement('div');
       p.className = 'loader-particle';
       p.style.left = Math.random() * 100 + '%';
-      p.style.top = Math.random() * 100 + '%';
-      p.style.animationDelay = Math.random() * 4 + 's';
-      p.style.animationDuration = (Math.random() * 2 + 3) + 's';
-      const colors = ['#7c5cfc', '#e040fb', '#00e5ff'];
+      p.style.animationDelay = Math.random() * 6 + 's';
+      p.style.animationDuration = (Math.random() * 3 + 4) + 's';
+      const colors = ['#7c5cfc', '#c084fc', '#e040fb', '#00e5ff'];
       p.style.background = colors[Math.floor(Math.random() * colors.length)];
-      p.style.boxShadow = `0 0 10px ${colors[Math.floor(Math.random() * colors.length)]}`;
+      p.style.boxShadow = `0 0 6px ${colors[Math.floor(Math.random() * colors.length)]}`;
       particles.appendChild(p);
     }
   }
@@ -41,7 +33,7 @@ const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 
     setTimeout(() => {
       loader.classList.add('hidden');
       document.body.style.overflow = '';
-    }, 2500);
+    }, 2800);
   });
 })();
 document.body.style.overflow = 'hidden';
