@@ -63,17 +63,6 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   opacity: 0.75;
   filter: drop-shadow(0 0 6px rgba(168,85,247,0.25));
 }
-
-.logo-vv::after {
-  content: '';
-  position: absolute;
-  right: -10px;
-  top: 8px;
-  width: 3px;
-  height: 80%;
-  background: linear-gradient(180deg, #a855f7, transparent);
-  border-radius: 2px;
-}
 @keyframes shineSweep {
   0% { left: -40%; opacity: 0; }
   8% { opacity: 1; }
@@ -90,8 +79,13 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 .loader-logo .logo-vv .line1,
 .loader-logo .logo-vv .line2 { font-size: 52px; }
 
-/* Footer logo - slight space */
-.footer-logo-vv { line-height: 1.1; }
+/* Footer logo */
+.footer-logo-vv {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.88;
+  position: relative;
+}
 .footer-logo-vv .line1,
 .footer-logo-vv .line2 { font-size: 36px; }
 
@@ -158,9 +152,9 @@ body {
   content: '';
   position: absolute;
   right: -10px;
-  top: 8px;
+  top: 5px;
   width: 3px;
-  height: 80%;
+  height: 50px;
   background: linear-gradient(180deg, #a855f7, transparent);
   border-radius: 2px;
 }
