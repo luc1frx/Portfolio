@@ -38,24 +38,71 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   cursor: default;
   text-decoration: none;
   line-height: 1;
+  overflow: hidden;
 }
 .logo-vv .line1 {
   font-family: 'Russo One', sans-serif;
   font-size: 28px;
   font-style: italic;
   letter-spacing: -1px;
-  background: linear-gradient(180deg, #ffffff 0%, #d4b8ff 100%);
+  background: linear-gradient(90deg, #ffffff, #d4b8ff, #a855f7, #ffffff);
+  background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: #d4b8ff;
+  animation: logoShine 4s ease-in-out infinite;
+  position: relative;
+}
+.logo-vv .line1::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shineSweep 4s ease-in-out infinite;
 }
 .logo-vv .line2 {
   font-family: 'Russo One', sans-serif;
   font-size: 28px;
   font-style: italic;
   letter-spacing: -1px;
-  color: #9333ea;
+  background: linear-gradient(90deg, #a855f7, #d4b8ff, #ffffff, #a855f7);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: logoShine2 4s ease-in-out infinite;
+  animation-delay: 0.8s;
+  position: relative;
+}
+.logo-vv .line2::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shineSweep2 4s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+@keyframes logoShine {
+  0%, 100% { background-position: 100% 0; }
+  50% { background-position: 0% 0; }
+}
+@keyframes logoShine2 {
+  0%, 100% { background-position: 100% 0; }
+  50% { background-position: 0% 0; }
+}
+@keyframes shineSweep {
+  0% { left: -100%; }
+  50%, 100% { left: 200%; }
+}
+@keyframes shineSweep2 {
+  0% { left: -100%; }
+  50%, 100% { left: 200%; }
 }
 
 /* Nav logo */
