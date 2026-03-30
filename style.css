@@ -141,12 +141,15 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 .nav-logo .logo-vv {
   animation: none;
 }
-.nav-logo .logo-vv .line1,
+.nav-logo .logo-vv .line1 {
+  font-size: 22px;
+  color: #e0e0e0;
+  -webkit-text-fill-color: #e0e0e0;
+}
 .nav-logo .logo-vv .line2 {
-  font-size: 24px;
-  animation: none;
-  color: #ffffff;
-  -webkit-text-fill-color: #ffffff;
+  font-size: 22px;
+  color: #a0a0a0;
+  -webkit-text-fill-color: #a0a0a0;
 }
 
 /* Loader logo - tight spacing */
@@ -163,12 +166,15 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   margin-bottom: 20px;
   vertical-align: top;
 }
-.footer-logo-vv .line1,
-.footer-logo-vv .line2 { 
-  font-size: 36px;
-  animation: none;
-  color: #ffffff;
-  -webkit-text-fill-color: #ffffff;
+.footer-logo-vv .line1 {
+  font-size: 32px;
+  color: #e0e0e0;
+  -webkit-text-fill-color: #e0e0e0;
+}
+.footer-logo-vv .line2 {
+  font-size: 32px;
+  color: #a0a0a0;
+  -webkit-text-fill-color: #a0a0a0;
 }
   display: block;
 }
@@ -307,16 +313,16 @@ body {
   font-size: 72px;
   font-style: italic;
   letter-spacing: -2px;
-  color: #ffffff;
-  -webkit-text-fill-color: #ffffff;
+  color: #e8e8e8;
+  -webkit-text-fill-color: #e8e8e8;
 }
 .loader-logo-vv .line2 {
   font-family: 'Russo One', sans-serif;
   font-size: 72px;
   font-style: italic;
   letter-spacing: -2px;
-  color: #b0b0b0;
-  -webkit-text-fill-color: #b0b0b0;
+  color: #909090;
+  -webkit-text-fill-color: #909090;
 }
 .loader-dots {
   display: flex;
