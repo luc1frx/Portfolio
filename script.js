@@ -499,7 +499,7 @@ if (!isTouchDevice) {
 // SMOOTH 3D TILT CARDS (Desktop only)
 // ============================================================
 if (!isTouchDevice) {
-  const tiltCards = document.querySelectorAll('.skill-card, .timeline-card, .edu-card, .bento-card, .contact-item, .float-card');
+  const tiltCards = document.querySelectorAll('.skill-card, .timeline-card, .edu-card, .bento-card, .contact-item, .float-card, .stat-item, .about-photo-main');
   const tiltSettings = { strength: 5, scale: 1.04 };
 
   tiltCards.forEach(card => {
