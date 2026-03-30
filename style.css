@@ -33,33 +33,46 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
 /* ── Logo VV ── */
 .logo-vv {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
+  line-height: 0.88;
   cursor: default;
+  position: relative;
   text-decoration: none;
-  line-height: 1;
 }
+
 .logo-vv .line1 {
   font-family: 'Russo One', sans-serif;
-  font-size: 28px;
+  font-size: 56px;
   font-style: italic;
   letter-spacing: -1px;
-  background: linear-gradient(135deg, #7c5cfc, #e040fb);
+  background: linear-gradient(120deg, #e2e2e2 30%, #a855f7 100%);
   -webkit-background-clip: text;
-  background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: #7c5cfc;
+  background-clip: text;
+  filter: drop-shadow(0 0 8px rgba(168,85,247,0.4));
 }
+
 .logo-vv .line2 {
   font-family: 'Russo One', sans-serif;
-  font-size: 28px;
+  font-size: 56px;
   font-style: italic;
   letter-spacing: -1px;
-  background: linear-gradient(135deg, #e040fb, #a855f7);
-  -webkit-background-clip: text;
-  background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: #e040fb;
+  -webkit-text-stroke: 1.5px #a855f7;
+  opacity: 0.75;
+  filter: drop-shadow(0 0 6px rgba(168,85,247,0.25));
+}
+
+.logo-vv::after {
+  content: '';
+  position: absolute;
+  right: -10px;
+  top: 8px;
+  width: 3px;
+  height: 80%;
+  background: linear-gradient(180deg, #a855f7, transparent);
+  border-radius: 2px;
 }
 @keyframes shineSweep {
   0% { left: -40%; opacity: 0; }
@@ -70,7 +83,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
 /* Nav logo */
 .nav-logo .logo-vv .line1,
-.nav-logo .logo-vv .line2 { font-size: 20px; }
+.nav-logo .logo-vv .line2 { font-size: 28px; }
 
 /* Loader logo - tight spacing */
 .loader-logo .logo-vv { line-height: 1; }
@@ -99,7 +112,7 @@ body {
 .loader {
   position: fixed;
   inset: 0;
-  background: #060914;
+  background: #080810;
   z-index: 99999;
   display: flex;
   align-items: center;
@@ -114,62 +127,41 @@ body {
 .loader-content {
   text-align: center;
 }
-.loader-circle {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 30px;
+.loader-logo-vv {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.88;
+  margin-bottom: 50px;
 }
-.loader-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 2px solid transparent;
-}
-.loader-ring:nth-child(1) {
-  border-top-color: #7c5cfc;
-  animation: spin 1.5s linear infinite;
-}
-.loader-ring:nth-child(2) {
-  border-right-color: #e040fb;
-  animation: spin 2s linear infinite reverse;
-  inset: 8px;
-}
-.loader-ring:nth-child(3) {
-  border-bottom-color: #00e5ff;
-  animation: spin 2.5s linear infinite;
-  inset: 16px;
-}
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-.loader-initials {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.loader-logo-vv .line1 {
   font-family: 'Russo One', sans-serif;
-  font-size: 2rem;
-  background: linear-gradient(135deg, #7c5cfc, #e040fb);
+  font-size: 56px;
+  font-style: italic;
+  letter-spacing: -1px;
+  background: linear-gradient(120deg, #e2e2e2 30%, #a855f7 100%);
   -webkit-background-clip: text;
-  background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: #7c5cfc;
+  background-clip: text;
+  filter: drop-shadow(0 0 8px rgba(168,85,247,0.4));
 }
-.loader-name {
-  margin-bottom: 40px;
-}
-.loader-name-text {
+.loader-logo-vv .line2 {
   font-family: 'Russo One', sans-serif;
-  font-size: 1.8rem;
-  color: #fff;
-  letter-spacing: 4px;
+  font-size: 56px;
+  font-style: italic;
+  letter-spacing: -1px;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.5px #a855f7;
+  opacity: 0.75;
+  filter: drop-shadow(0 0 6px rgba(168,85,247,0.25));
 }
-.loader-name-underline {
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, #7c5cfc, #e040fb);
-  margin: 12px auto 0;
+.loader-logo-vv::after {
+  content: '';
+  position: absolute;
+  right: -10px;
+  top: 8px;
+  width: 3px;
+  height: 80%;
+  background: linear-gradient(180deg, #a855f7, transparent);
   border-radius: 2px;
 }
 .loader-bar-container {
