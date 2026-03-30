@@ -180,7 +180,7 @@ class Particle {
     this.vx = (Math.random() - 0.5) * 0.5;
     this.vy = (Math.random() - 0.5) * 0.5;
     this.baseRadius = Math.random() * 2 + 1;
-    this.colorType = Math.random() > 0.5 ? '59, 130, 246' : '6, 182, 212'; // Blue or Cyan
+    this.colorType = Math.random() > 0.5 ? '255, 255, 255' : '180, 180, 180'; // White or Grey
     this.alpha = Math.random() * 0.5 + 0.3;
     
     // Mouse interaction properties
@@ -258,7 +258,7 @@ class RainDrop {
     ctx.beginPath();
     ctx.moveTo(this.x, this.y);
     ctx.lineTo(this.x + this.speedX * 1.5, this.y + this.length);
-    ctx.strokeStyle = `rgba(59, 130, 246, ${this.alpha})`; // Blue tinted rain to match theme
+    ctx.strokeStyle = `rgba(255, 255, 255, ${this.alpha * 0.3})`; // White rain for grey theme
     ctx.lineWidth = 1;
     ctx.stroke();
   }
@@ -311,7 +311,7 @@ function drawConstellation() {
         ctx.beginPath();
         let alpha = 1 - (dist / 18000);
         // Blend colors
-        ctx.strokeStyle = `rgba(59, 130, 246, ${alpha * 0.15})`;
+        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.1})`;
         ctx.lineWidth = 1;
         ctx.moveTo(particles[i].x, particles[i].y);
         ctx.lineTo(particles[j].x, particles[j].y);
@@ -331,7 +331,7 @@ function drawConstellation() {
         ctx.moveTo(particles[i].x, particles[i].y);
         ctx.lineTo(mouseX, mouseY);
         // Stunning cyan glowing spider lines
-        ctx.strokeStyle = `rgba(0, 229, 255, ${(1 - dist / 160) * 0.6})`;
+        ctx.strokeStyle = `rgba(255, 255, 255, ${(1 - dist / 160) * 0.5})`;
         ctx.lineWidth = 1.2;
         ctx.stroke();
       }
