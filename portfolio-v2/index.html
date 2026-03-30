@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Varun Verma — Project Management & Digital Marketing</title>
+  <meta name="description" content="Portfolio of Varun Verma — Project Management & Digital Marketing Specialist based in Lucknow, UP." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ==================== LOADING SCREEN ==================== -->
+  <div class="loader" id="loader">
+    <!-- Animated grid background -->
+    <div class="loader-grid-bg"></div>
+    <!-- Floating particles in loader -->
+    <div class="loader-particles" id="loader-particles"></div>
+    <!-- Corner accents -->
+    <div class="loader-corner tl"></div>
+    <div class="loader-corner tr"></div>
+    <div class="loader-corner bl"></div>
+    <div class="loader-corner br"></div>
+    <div class="loader-inner">
+      <!-- Orbiting rings -->
+      <div class="loader-orbit">
+        <div class="orbit-ring o1"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring o2"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring o3"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring o4"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring o5"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring o6"><div class="orbit-dot"></div></div>
+      </div>
+      <!-- Center logo -->
+      <div class="loader-logo-wrap">
+        <div class="loader-logo-glow"></div>
+        <a href="#hero" class="logo-vv">
+          <span class="line1">VARUN</span>
+          <span class="line2">VERMA</span>
+        </a>
+      </div>
+      <!-- Text -->
+      <div class="loader-bottom">
+        <div class="loader-bar">
+          <div class="loader-bar-fill" id="loader-bar-fill"></div>
+        </div>
+        <p class="loader-text">
+          <span class="loader-char" style="--i:0">L</span><span class="loader-char" style="--i:1">o</span><span class="loader-char" style="--i:2">a</span><span class="loader-char" style="--i:3">d</span><span class="loader-char" style="--i:4">i</span><span class="loader-char" style="--i:5">n</span><span class="loader-char" style="--i:6">g</span>
+          <span class="loader-space"></span>
+          <span class="loader-char" style="--i:7">E</span><span class="loader-char" style="--i:8">x</span><span class="loader-char" style="--i:9">p</span><span class="loader-char" style="--i:10">e</span><span class="loader-char" style="--i:11">r</span><span class="loader-char" style="--i:12">i</span><span class="loader-char" style="--i:13">e</span><span class="loader-char" style="--i:14">n</span><span class="loader-char" style="--i:15">c</span><span class="loader-char" style="--i:16">e</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCROLL PROGRESS ==================== -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ==================== BACKGROUND LAYERS ==================== -->
+  <div class="bg-layers" id="bg-layers">
+    <canvas id="bg-canvas"></canvas>
+    <!-- Glowing Orbs - interactive -->
+    <div class="orb orb-1" data-orb></div>
+    <div class="orb orb-2" data-orb></div>
+    <div class="orb orb-3" data-orb></div>
+    <div class="orb orb-4" data-orb></div>
+    <div class="orb orb-5" data-orb></div>
+    <!-- Gradient mesh -->
+    <div class="bg-mesh"></div>
+  </div>
+
+  <!-- ==================== CUSTOM CURSOR ==================== -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav class="navbar" id="navbar">
+    <a href="#hero" class="nav-logo logo-vv" aria-label="Home">
+      <span class="line1">VARUN</span>
+      <span class="line2">VERMA</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#experience" class="nav-link">Experience</a></li>
+      <li><a href="#skills" class="nav-link">Skills</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#education" class="nav-link">Education</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Let's Talk</a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ==================== MOBILE MENU ==================== -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <div class="hero-badge reveal">
+            <span class="badge-dot"></span>
+            Available for Opportunities
+          </div>
+          <h1 class="hero-title reveal d1">
+            <span class="hero-line">Varun</span>
+            <span class="hero-line hero-accent">Verma</span>
+          </h1>
+          <p class="hero-subtitle reveal d2">
+            I am a <span id="typed-text"></span><span class="cursor-blink">|</span>
+          </p>
+          <p class="hero-desc reveal d3">
+            Results-driven professional managing end-to-end digital strategies for government-led initiatives across Uttar Pradesh. Leading 70+ coordinators across 50+ villages.
+          </p>
+          <div class="hero-cta reveal d4">
+            <a href="#projects" class="btn btn-primary">
+              View My Work
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+            </a>
+            <a href="#contact" class="btn btn-outline">Get In Touch</a>
+          </div>
+          <div class="hero-stats reveal d5">
+            <div class="stat">
+              <span class="stat-num" data-target="50">0</span><span class="stat-plus">+</span>
+              <span class="stat-label">Villages</span>
+            </div>
+            <div class="stat-sep"></div>
+            <div class="stat">
+              <span class="stat-num" data-target="70">0</span><span class="stat-plus">+</span>
+              <span class="stat-label">Coordinators</span>
+            </div>
+            <div class="stat-sep"></div>
+            <div class="stat">
+              <span class="stat-num" data-target="3">0</span><span class="stat-plus">+</span>
+              <span class="stat-label">Years</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual reveal d2">
+          <div class="hero-img-container" data-parallax="0.03">
+            <div class="hero-img-border"></div>
+            <img src="../varun-formal.jpg" alt="Varun Verma" class="hero-img" />
+            <div class="hero-img-glow"></div>
+          </div>
+          <div class="hero-float-card fc-1 glass" data-parallax="-0.04">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"/></svg>
+            <span>Digital Strategy</span>
+          </div>
+          <div class="hero-float-card fc-2 glass" data-parallax="0.05">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/></svg>
+            <span>70+ Team Led</span>
+          </div>
+          <div class="hero-float-card fc-3 glass" data-parallax="-0.06">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+            <span>Govt Projects</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator" aria-hidden="true">
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ==================== MARQUEE ==================== -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Project Management</span>
+      <span class="marquee-dot"></span>
+      <span>Digital Marketing</span>
+      <span class="marquee-dot"></span>
+      <span>SEO & Analytics</span>
+      <span class="marquee-dot"></span>
+      <span>E-Commerce</span>
+      <span class="marquee-dot"></span>
+      <span>Social Media Strategy</span>
+      <span class="marquee-dot"></span>
+      <span>Team Leadership</span>
+      <span class="marquee-dot"></span>
+      <span>Project Management</span>
+      <span class="marquee-dot"></span>
+      <span>Digital Marketing</span>
+      <span class="marquee-dot"></span>
+      <span>SEO & Analytics</span>
+      <span class="marquee-dot"></span>
+      <span>E-Commerce</span>
+      <span class="marquee-dot"></span>
+      <span>Social Media Strategy</span>
+      <span class="marquee-dot"></span>
+      <span>Team Leadership</span>
+      <span class="marquee-dot"></span>
+    </div>
+  </div>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section class="section about-section" id="about">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">Who I Am</span>
+        <h2 class="section-title">About Me</h2>
+      </div>
+      <div class="about-layout">
+        <!-- Photo Side -->
+        <div class="about-photo-area reveal d1">
+          <div class="about-photo-wrap">
+            <img src="../varun-casual.jpg" alt="Varun Verma casual portrait" class="about-photo" />
+            <div class="about-photo-overlay"></div>
+            <div class="about-photo-border"></div>
+          </div>
+          <div class="about-photo-glow"></div>
+          <!-- Floating badge -->
+          <div class="about-float-badge glass">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 0 1 15 0Z"/></svg>
+            <span>Lucknow, India</span>
+          </div>
+        </div>
+        <!-- Content Side -->
+        <div class="about-content">
+          <p class="about-lead reveal d1">
+            Hi! I'm <strong>Varun Verma</strong>, a <strong>Project Management & Digital Marketing Specialist</strong> based in Lucknow, Uttar Pradesh.
+          </p>
+          <p class="reveal d2">
+            Currently serving as <strong>Assistant Project Manager at Geostat Informatics</strong>, I lead digital strategy for UP Tourism's Rural Tourism initiative — managing <strong>19 district coordinators & 51 village coordinators</strong> across Uttar Pradesh.
+          </p>
+          <p class="reveal d3">
+            I also founded <strong>MBANOTES.IN</strong>, a digital library for MBA students, and previously built an e-commerce venture called Shoppers Byte.
+          </p>
+          <!-- Quick Info Cards -->
+          <div class="about-cards-row reveal d4">
+            <div class="about-mini-card glass" data-tilt>
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"/></svg>
+              <div><strong>MBA – IT & Marketing</strong><span>BBDITM (AKTU)</span></div>
+            </div>
+            <div class="about-mini-card glass accent-card" data-tilt>
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+              <div><strong>Open to Work</strong><span>Available now</span></div>
+            </div>
+          </div>
+          <!-- Value Tile -->
+          <div class="about-value-tile glass reveal d5" data-tilt>
+            <div class="about-value">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/></svg>
+              <div><strong>Government & Rural Tourism</strong><span>Leading digital transformation for 50+ villages across UP</span></div>
+            </div>
+            <div class="about-value">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"/></svg>
+              <div><strong>Digital Marketing & SEO</strong><span>Scaling platforms through organic growth strategies</span></div>
+            </div>
+            <div class="about-value">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/></svg>
+              <div><strong>Team Leadership</strong><span>Managing 70+ coordinators across 19 districts</span></div>
+            </div>
+          </div>
+          <!-- Interests -->
+          <div class="about-tags reveal d5">
+            <span class="tag">Fitness</span>
+            <span class="tag">Reading</span>
+            <span class="tag">Traveling</span>
+            <span class="tag">Gaming</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== EXPERIENCE ==================== -->
+  <section class="section" id="experience">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">My Journey</span>
+        <h2 class="section-title">Work Experience</h2>
+      </div>
+      <div class="timeline">
+        <article class="tl-item reveal d1">
+          <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+          <div class="tl-card glass" data-tilt>
+            <div class="tl-top">
+              <div>
+                <h3 class="tl-role">Assistant Project Manager</h3>
+                <p class="tl-company">Geostat Informatics</p>
+              </div>
+              <span class="tl-date">Aug 2024 – Present</span>
+            </div>
+            <p class="tl-loc">Lucknow, Uttar Pradesh</p>
+            <ul class="tl-list">
+              <li>Managing Digital Strategy for UP Tourism's Rural Tourism project.</li>
+              <li>Coordinating 19 district and 51 village coordinators.</li>
+              <li>Managing 50+ village social media accounts.</li>
+            </ul>
+            <div class="tl-tags"><span class="tag">Project Management</span><span class="tag">Digital Strategy</span><span class="tag">UP Tourism</span></div>
+          </div>
+        </article>
+        <article class="tl-item reveal d2">
+          <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+          <div class="tl-card glass" data-tilt>
+            <div class="tl-top">
+              <div>
+                <h3 class="tl-role">Founder & Owner</h3>
+                <p class="tl-company">MBANOTES.IN</p>
+              </div>
+              <span class="tl-date">Oct 2024 – Present</span>
+            </div>
+            <ul class="tl-list">
+              <li>Digital library for MBA students with study materials.</li>
+              <li>Platform scaled via SEO optimization.</li>
+            </ul>
+            <div class="tl-tags"><span class="tag">EdTech</span><span class="tag">SEO</span></div>
+          </div>
+        </article>
+        <article class="tl-item reveal d3">
+          <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+          <div class="tl-card glass" data-tilt>
+            <div class="tl-top">
+              <div>
+                <h3 class="tl-role">Digital Expert</h3>
+                <p class="tl-company">Moundweb IT Solutions</p>
+              </div>
+              <span class="tl-date">Mar 2024 – Jul 2024</span>
+            </div>
+            <ul class="tl-list">
+              <li>Managed social media accounts for brand awareness.</li>
+              <li>Facebook Ads campaigns and A/B testing.</li>
+            </ul>
+            <div class="tl-tags"><span class="tag">Facebook Ads</span><span class="tag">Analytics</span></div>
+          </div>
+        </article>
+        <article class="tl-item reveal d4">
+          <div class="tl-marker"><div class="tl-dot"></div><div class="tl-line"></div></div>
+          <div class="tl-card glass" data-tilt>
+            <div class="tl-top">
+              <div>
+                <h3 class="tl-role">Founder</h3>
+                <p class="tl-company">Shoppers Byte</p>
+              </div>
+              <span class="tl-date">Apr 2022 – Nov 2023</span>
+            </div>
+            <ul class="tl-list">
+              <li>E-commerce platform for gadgets and lifestyle.</li>
+              <li>End-to-end operations and marketing.</li>
+            </ul>
+            <div class="tl-tags"><span class="tag">E-commerce</span><span class="tag">Shopify</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SKILLS ==================== -->
+  <section class="section" id="skills">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">What I Do</span>
+        <h2 class="section-title">My Skills</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card glass reveal-scale d1" data-tilt data-tilt>
+          <div class="skill-icon">
+            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3"/></svg>
+          </div>
+          <h3>Project Management</h3>
+          <p>Planning & executing government-led digital projects; coordinating 19 district & 51 village coordinators.</p>
+          <div class="skill-bar"><div class="skill-fill" data-width="92"></div></div>
+        </div>
+        <div class="skill-card glass reveal-scale d2" data-tilt>
+          <div class="skill-icon">
+            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 18.75h6"/></svg>
+          </div>
+          <h3>Digital Marketing</h3>
+          <p>Strategy, content creation, and engagement across 50+ village social media accounts.</p>
+          <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+        </div>
+        <div class="skill-card glass reveal-scale d3" data-tilt>
+          <div class="skill-icon">
+            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg>
+          </div>
+          <h3>SEO & Analytics</h3>
+          <p>Ahrefs, SEMrush, keyword research, website auditing, and data-driven optimization.</p>
+          <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+        </div>
+        <div class="skill-card glass reveal-scale d4" data-tilt>
+          <div class="skill-icon">
+            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/></svg>
+          </div>
+          <h3>E-Commerce</h3>
+          <p>Shopify store creation, dropshipping, A/B testing, and conversion optimization.</p>
+          <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+        </div>
+        <div class="skill-card glass reveal-scale d5" data-tilt>
+          <div class="skill-icon">
+            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+          </div>
+          <h3>Paid Advertising</h3>
+          <p>Facebook Ads Manager, campaign monitoring, and ROI optimization.</p>
+          <div class="skill-bar"><div class="skill-fill" data-width="83"></div></div>
+        </div>
+        <div class="skill-card glass reveal-scale d6" data-tilt>
+          <div class="skill-icon">
+            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42"/></svg>
+          </div>
+          <h3>Content & Design</h3>
+          <p>Canva, blogs, social posts, promotional videos, and brand storytelling.</p>
+          <div class="skill-bar"><div class="skill-fill" data-width="78"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROJECTS ==================== -->
+  <section class="section" id="projects">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">What I've Built</span>
+        <h2 class="section-title">Featured Projects</h2>
+      </div>
+      <div class="projects-grid">
+        <article class="project-card glass reveal-scale d1" data-tilt>
+          <span class="project-num">01</span>
+          <h3 class="project-name">Uttar Pradesh Tourism</h3>
+          <p class="project-desc">Led end-to-end digital strategy for UP Rural Tourism. Managed social media for 50+ villages and trained 70+ coordinators across 19 districts.</p>
+          <div class="project-tags"><span class="tag">Social Media</span><span class="tag">Strategy</span><span class="tag">Leadership</span></div>
+          <div class="project-arrow"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg></div>
+        </article>
+        <article class="project-card glass reveal-scale d2" data-tilt>
+          <span class="project-num">02</span>
+          <h3 class="project-name">MBANOTES.IN</h3>
+          <p class="project-desc">Digital library for MBA students. Scaled via SEO optimization, providing study materials and resources to thousands.</p>
+          <div class="project-tags"><span class="tag">Web Platform</span><span class="tag">SEO</span></div>
+          <div class="project-arrow"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg></div>
+        </article>
+        <article class="project-card glass reveal-scale d3" data-tilt>
+          <span class="project-num">03</span>
+          <h3 class="project-name">Shoppers Byte</h3>
+          <p class="project-desc">E-commerce platform for gadgets and lifestyle products. End-to-end operations, marketing, and Shopify management.</p>
+          <div class="project-tags"><span class="tag">Shopify</span><span class="tag">E-commerce</span><span class="tag">Marketing</span></div>
+          <div class="project-arrow"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== EDUCATION ==================== -->
+  <section class="section" id="education">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">Academic Background</span>
+        <h2 class="section-title">Education</h2>
+      </div>
+      <div class="edu-grid">
+        <div class="edu-card glass reveal-scale d1" data-tilt>
+          <div class="edu-icon">
+            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"/></svg>
+          </div>
+          <div class="edu-info"><h3>MBA – IT & Marketing</h3><p>BBDITM (AKTU)</p><span>Lucknow, UP</span></div>
+          <span class="edu-year">2024</span>
+        </div>
+        <div class="edu-card glass reveal-scale d2" data-tilt>
+          <div class="edu-icon">
+            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+          </div>
+          <div class="edu-info"><h3>B.A. – English</h3><p>CSJMU (Kanpur University)</p><span>Kanpur, UP</span></div>
+          <span class="edu-year">2022</span>
+        </div>
+        <div class="edu-card glass reveal-scale d3" data-tilt>
+          <div class="edu-icon">
+            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z"/></svg>
+          </div>
+          <div class="edu-info"><h3>Intermediate – PCM</h3><p>Bright Career Inter College</p><span>Lucknow, UP</span></div>
+          <span class="edu-year">2019</span>
+        </div>
+        <div class="edu-card glass reveal-scale d4" data-tilt>
+          <div class="edu-icon">
+            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 0h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z"/></svg>
+          </div>
+          <div class="edu-info"><h3>High School – PCM</h3><p>St. Clare's Convent School</p><span>Lucknow, UP</span></div>
+          <span class="edu-year">2017</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT ==================== -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">Get In Touch</span>
+        <h2 class="section-title">Let's Work Together</h2>
+      </div>
+      <div class="contact-layout">
+        <div class="contact-info">
+          <p class="contact-intro reveal d1">I'm always open to new opportunities and collaborations. Whether you have a project in mind or just want to connect, feel free to reach out.</p>
+          <div class="contact-links">
+            <a href="tel:+919044651976" class="contact-item glass reveal d2" data-tilt>
+              <div class="contact-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg></div>
+              <div><span class="ci-label">Phone</span><span class="ci-value">+91 9044651976</span></div>
+            </a>
+            <a href="mailto:VARUN.VERMA21FEB@GMAIL.COM" class="contact-item glass reveal d3" data-tilt>
+              <div class="contact-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg></div>
+              <div><span class="ci-label">Email</span><span class="ci-value">varun.verma21feb@gmail.com</span></div>
+            </a>
+            <div class="contact-item glass reveal d4" data-tilt>
+              <div class="contact-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 0 1 15 0Z"/></svg></div>
+              <div><span class="ci-label">Location</span><span class="ci-value">Lucknow, UP, India</span></div>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form glass reveal d3" data-tilt id="contact-form">
+          <div class="field"><input type="text" id="fn" placeholder=" " required autocomplete="name" /><label for="fn">Your Name</label></div>
+          <div class="field"><input type="email" id="fe" placeholder=" " required autocomplete="email" /><label for="fe">Your Email</label></div>
+          <div class="field"><textarea id="fm" placeholder=" " rows="5" required></textarea><label for="fm">Your Message</label></div>
+          <button type="submit" class="btn btn-primary btn-full">
+            Send Message
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"/></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="#hero" class="logo-vv">
+            <span class="line1">VARUN</span>
+            <span class="line2">VERMA</span>
+          </a>
+        </div>
+        <p class="footer-sub">Project Management & Digital Marketing Specialist</p>
+        <p class="footer-copy">&copy; 2026 Varun Verma. Crafted in Lucknow.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
