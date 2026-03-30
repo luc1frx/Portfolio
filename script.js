@@ -3,6 +3,39 @@
 const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.matchMedia('(hover: none)').matches;
 
 // ============================================================
+// LOADER
+// ============================================================
+(function initLoader() {
+  const loader = document.getElementById('loader');
+  const particles = document.getElementById('loader-particles');
+  if (!loader) return;
+
+  // Create floating particles
+  if (particles) {
+    for (let i = 0; i < 15; i++) {
+      const p = document.createElement('div');
+      p.className = 'loader-particle';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.top = Math.random() * 100 + '%';
+      p.style.animationDelay = Math.random() * 3 + 's';
+      p.style.opacity = Math.random() * 0.5 + 0.2;
+      const colors = ['#7c5cfc', '#e040fb', '#00e5ff'];
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      particles.appendChild(p);
+    }
+  }
+
+  // Hide loader after content loads
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      loader.classList.add('hidden');
+      document.body.style.overflow = '';
+    }, 2200);
+  });
+})();
+document.body.style.overflow = 'hidden';
+
+// ============================================================
 // GLOWING CURSOR (Desktop only)
 // ============================================================
 const cursor = document.getElementById('cursor');
@@ -295,19 +328,14 @@ const hamburger = document.getElementById('hamburger');
 const navLinksEl = document.getElementById('nav-links');
 hamburger.addEventListener('click', () => {
   const open = navLinksEl.classList.toggle('open');
+  hamburger.classList.toggle('active', open);
   hamburger.setAttribute('aria-expanded', open);
-  const spans = hamburger.querySelectorAll('span');
-  if (open) {
-    spans[0].style.transform = 'translateY(7px) rotate(45deg)';
-    spans[1].style.opacity = '0';
-    spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
-  } else {
-    spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
-  }
+  document.body.style.overflow = open ? 'hidden' : '';
 });
 navLinks.forEach(l => l.addEventListener('click', () => {
   navLinksEl.classList.remove('open');
-  hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+  hamburger.classList.remove('active');
+  document.body.style.overflow = '';
 }));
 
 // ============================================================
