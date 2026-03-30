@@ -7,26 +7,79 @@ const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 
 // ============================================================
 (function initLoader() {
   const loader = document.getElementById('loader');
-  const loaderBar = document.getElementById('loader-bar');
   if (!loader) return;
 
-  let progress = 0;
-  const progressInterval = setInterval(() => {
-    progress += Math.random() * 20 + 10;
-    if (progress >= 100) {
-      progress = 100;
-      clearInterval(progressInterval);
-    }
-    if (loaderBar) loaderBar.style.width = progress + '%';
-  }, 150);
-
-  setTimeout(() => {
-    if (loaderBar) loaderBar.style.width = '100%';
+  const canvas = document.getElementById('loader-canvas');
+  if (!canvas) {
     setTimeout(() => {
       loader.classList.add('hidden');
       document.body.style.overflow = '';
-    }, 300);
-  }, 2000);
+    }, 2500);
+    return;
+  }
+
+  const ctx = canvas.getContext('2d');
+  let W = canvas.width = window.innerWidth;
+  let H = canvas.height = window.innerHeight;
+  let particles = [];
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.vx = (Math.random() - 0.5) * 0.3;
+      this.vy = (Math.random() - 0.5) * 0.3;
+      this.radius = Math.random() * 1.5 + 0.5;
+      this.alpha = Math.random() * 0.5 + 0.2;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0) this.x = W;
+      if (this.x > W) this.x = 0;
+      if (this.y < 0) this.y = H;
+      if (this.y > H) this.y = 0;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+  function animate() {
+    if (!loader.classList.contains('hidden')) {
+      ctx.fillStyle = 'rgba(10, 10, 15, 0.1)';
+      ctx.fillRect(0, 0, W, H);
+      particles.forEach(p => { p.update(); p.draw(); });
+      
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          let dx = particles[i].x - particles[j].x;
+          let dy = particles[i].y - particles[j].y;
+          let dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 * (1 - dist / 120)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+  }
+  animate();
+
+  setTimeout(() => {
+    loader.classList.add('hidden');
+    document.body.style.overflow = '';
+  }, 2500);
 })();
 document.body.style.overflow = 'hidden';
 
@@ -127,7 +180,7 @@ class Particle {
     this.vx = (Math.random() - 0.5) * 0.5;
     this.vy = (Math.random() - 0.5) * 0.5;
     this.baseRadius = Math.random() * 2 + 1;
-    this.colorType = Math.random() > 0.5 ? '124, 92, 252' : '0, 229, 255'; // Purple or Cyan
+    this.colorType = Math.random() > 0.5 ? '59, 130, 246' : '6, 182, 212'; // Blue or Cyan
     this.alpha = Math.random() * 0.5 + 0.3;
     
     // Mouse interaction properties
@@ -205,7 +258,7 @@ class RainDrop {
     ctx.beginPath();
     ctx.moveTo(this.x, this.y);
     ctx.lineTo(this.x + this.speedX * 1.5, this.y + this.length);
-    ctx.strokeStyle = `rgba(124, 92, 252, ${this.alpha})`; // Purple tinted rain to match theme
+    ctx.strokeStyle = `rgba(59, 130, 246, ${this.alpha})`; // Blue tinted rain to match theme
     ctx.lineWidth = 1;
     ctx.stroke();
   }
@@ -258,7 +311,7 @@ function drawConstellation() {
         ctx.beginPath();
         let alpha = 1 - (dist / 18000);
         // Blend colors
-        ctx.strokeStyle = `rgba(124, 92, 252, ${alpha * 0.15})`;
+        ctx.strokeStyle = `rgba(59, 130, 246, ${alpha * 0.15})`;
         ctx.lineWidth = 1;
         ctx.moveTo(particles[i].x, particles[i].y);
         ctx.lineTo(particles[j].x, particles[j].y);
