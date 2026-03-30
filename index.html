@@ -2,25 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#060914" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Varun Verma | Project Management & Digital Marketing Specialist</title>
   <meta name="description" content="Portfolio of Varun Verma – Project Management & Digital Marketing Specialist based in Lucknow, UP. Expert in government digital projects, rural tourism, SEO, and e-commerce." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&family=Russo+One&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Preloader -->
-  <div class="preloader" id="preloader">
-    <div class="preloader-content">
-      <div class="preloader-logo">
-        <span class="preloader-text">VV</span>
+  <!-- Loading Screen -->
+  <div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="loader-circle">
+        <div class="loader-ring"></div>
+        <div class="loader-ring"></div>
+        <div class="loader-ring"></div>
+        <div class="loader-initials">VV</div>
       </div>
-      <div class="preloader-bar">
-        <div class="preloader-progress"></div>
+      <div class="loader-name">
+        <span class="loader-name-text">VARUN VERMA</span>
+        <div class="loader-name-underline"></div>
       </div>
-      <p class="preloader-text-loading">Loading...</p>
+      <div class="loader-bar-container">
+        <div class="loader-bar-fill" id="loader-bar"></div>
+      </div>
+      <p class="loader-loading">Loading Portfolio</p>
     </div>
   </div>
 
@@ -39,9 +50,12 @@
 
   <!-- Navigation -->
   <nav class="navbar" id="navbar">
-    <div class="nav-logo">
-      <span class="logo-text">VV</span>
-    </div>
+    <a href="#hero" class="nav-logo">
+      <span class="logo-vv">
+        <span class="line1">VARUN</span>
+        <span class="line2">VERMA</span>
+      </span>
+    </a>
     <ul class="nav-links" id="nav-links">
       <li><a href="#hero" class="nav-link active" id="nav-home">Home</a></li>
       <li><a href="#about" class="nav-link" id="nav-about">About</a></li>
@@ -51,8 +65,10 @@
       <li><a href="#education" class="nav-link" id="nav-education">Education</a></li>
       <li><a href="#contact" class="nav-link" id="nav-contact">Contact</a></li>
     </ul>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
     </button>
   </nav>
 
@@ -567,9 +583,12 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-content">
-      <div class="footer-logo">VV</div>
-      <p class="footer-text">Varun Verma · Project Management & Digital Marketing Specialist</p>
-      <p class="footer-copy">© 2026 Varun Verma. Crafted with ❤️ in Lucknow.</p>
+      <a href="#hero" class="logo-vv footer-logo-vv">
+        <span class="line1">VARUN</span>
+        <span class="line2">VERMA</span>
+      </a>
+      <p class="footer-text">Project Management & Digital Marketing Specialist</p>
+      <p class="footer-copy">© 2001 Varun Verma. Crafted with ❤️ in Lucknow.</p>
     </div>
   </footer>
 

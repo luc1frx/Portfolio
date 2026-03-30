@@ -1,21 +1,37 @@
-/* ===== SCRIPT.JS – VARUN VERMA PORTFOLIO (Clean Premium) ===== */
+/* ===== SCRIPT.JS – VARUN VERMA PORTFOLIO (Mobile Optimized) ===== */
+
+const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.matchMedia('(hover: none)').matches;
 
 // ============================================================
-// PRELOADER
+// LOADER
 // ============================================================
-window.addEventListener('load', () => {
-  const preloader = document.getElementById('preloader');
-  const progress = document.querySelector('.preloader-progress');
-  
-  progress.style.width = '100%';
-  
+(function initLoader() {
+  const loader = document.getElementById('loader');
+  const loaderBar = document.getElementById('loader-bar');
+  if (!loader) return;
+
+  let progress = 0;
+  const progressInterval = setInterval(() => {
+    progress += Math.random() * 20 + 10;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(progressInterval);
+    }
+    if (loaderBar) loaderBar.style.width = progress + '%';
+  }, 150);
+
   setTimeout(() => {
-    preloader.classList.add('hidden');
-  }, 800);
-});
+    if (loaderBar) loaderBar.style.width = '100%';
+    setTimeout(() => {
+      loader.classList.add('hidden');
+      document.body.style.overflow = '';
+    }, 300);
+  }, 2000);
+})();
+document.body.style.overflow = 'hidden';
 
 // ============================================================
-// GLOWING CURSOR
+// GLOWING CURSOR (Desktop only)
 // ============================================================
 const cursor = document.getElementById('cursor');
 const follower = document.getElementById('cursor-follower');
@@ -23,21 +39,58 @@ let mouseX = 0, mouseY = 0;
 let followerX = 0, followerY = 0;
 let isHovering = false;
 
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  cursor.style.left = mouseX + 'px';
-  cursor.style.top = mouseY + 'px';
+if (isTouchDevice) {
+  if (cursor) cursor.style.display = 'none';
+  if (follower) follower.style.display = 'none';
+  document.body.style.cursor = 'auto';
+  document.querySelectorAll('.btn, .hamburger, .dock-toggle, a, button').forEach(el => el.style.cursor = 'pointer');
+} else {
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+    const spotlight = document.getElementById('mouse-spotlight');
+    if (spotlight) {
+      spotlight.style.setProperty('--mx', mouseX + 'px');
+      spotlight.style.setProperty('--my', mouseY + 'px');
+    }
+  });
 
-  // Update CSS spotlight variable
-  const spotlight = document.getElementById('mouse-spotlight');
-  if (spotlight) {
-    spotlight.style.setProperty('--mx', mouseX + 'px');
-    spotlight.style.setProperty('--my', mouseY + 'px');
+  document.addEventListener('mouseover', (e) => {
+    if (e.target.closest('a, button, .skill-card, .project-card, .timeline-card, .edu-card, .contact-item, .interest-tag')) {
+      isHovering = true;
+      cursor.classList.add('cursor-hover');
+      follower.classList.add('cursor-hover');
+    }
+  });
+  document.addEventListener('mouseout', (e) => {
+    if (e.target.closest('a, button, .skill-card, .project-card, .timeline-card, .edu-card, .contact-item, .interest-tag')) {
+      isHovering = false;
+      cursor.classList.remove('cursor-hover');
+      follower.classList.remove('cursor-hover');
+    }
+  });
+
+  function animateFollower() {
+    followerX += (mouseX - followerX) * (isHovering ? 0.07 : 0.11);
+    followerY += (mouseY - followerY) * (isHovering ? 0.07 : 0.11);
+    follower.style.left = followerX + 'px';
+    follower.style.top = followerY + 'px';
+    requestAnimationFrame(animateFollower);
   }
-});
+  animateFollower();
 
-// Mobile Touch Support for Interactive Background Animations
+  document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; follower.style.opacity = '0'; });
+  document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; follower.style.opacity = '1'; });
+}
+
+// Touch spotlight support
+document.addEventListener('touchstart', (e) => {
+  mouseX = e.touches[0].clientX;
+  mouseY = e.touches[0].clientY;
+}, { passive: true });
+
 document.addEventListener('touchmove', (e) => {
   mouseX = e.touches[0].clientX;
   mouseY = e.touches[0].clientY;
@@ -48,49 +101,7 @@ document.addEventListener('touchmove', (e) => {
   }
 }, { passive: true });
 
-document.addEventListener('touchstart', (e) => {
-  mouseX = e.touches[0].clientX;
-  mouseY = e.touches[0].clientY;
-}, { passive: true });
-
-document.addEventListener('touchend', () => {
-  // Gracefully remove touch interaction point when finger lifts
-  mouseX = 0;
-  mouseY = 0;
-}, { passive: true });
-
-document.addEventListener('mouseover', (e) => {
-  if (e.target.closest('a, button, .skill-card, .project-card, .timeline-card, .edu-card, .contact-item, .interest-tag')) {
-    isHovering = true;
-    cursor.classList.add('cursor-hover');
-    follower.classList.add('cursor-hover');
-  }
-});
-document.addEventListener('mouseout', (e) => {
-  if (e.target.closest('a, button, .skill-card, .project-card, .timeline-card, .edu-card, .contact-item, .interest-tag')) {
-    isHovering = false;
-    cursor.classList.remove('cursor-hover');
-    follower.classList.remove('cursor-hover');
-  }
-});
-
-function animateFollower() {
-  followerX += (mouseX - followerX) * (isHovering ? 0.07 : 0.11);
-  followerY += (mouseY - followerY) * (isHovering ? 0.07 : 0.11);
-  follower.style.left = followerX + 'px';
-  follower.style.top = followerY + 'px';
-  requestAnimationFrame(animateFollower);
-}
-animateFollower();
-
-document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; follower.style.opacity = '0'; });
-document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; follower.style.opacity = '1'; });
-
-if ('ontouchstart' in window) {
-  cursor.style.display = 'none';
-  follower.style.display = 'none';
-  document.body.style.cursor = 'auto';
-}
+document.addEventListener('touchend', () => { mouseX = 0; mouseY = 0; }, { passive: true });
 
 // ============================================================
 // REACTIVE CONSTELLATION MESH BACKGROUND
@@ -202,9 +213,10 @@ class RainDrop {
 
 function initParticles() {
   particles = [];
-  const density = window.innerWidth > 900 ? 12000 : 35000;
-  const maxParticles = window.innerWidth > 900 ? 150 : 40; // Dramatically reduced on mobile for max smoothness
-  const count = Math.min(Math.floor((W * H) / density), maxParticles); 
+  const isMobile = window.innerWidth <= 768;
+  const density = isMobile ? 40000 : 12000;
+  const maxParticles = isMobile ? 25 : 120;
+  const count = Math.min(Math.floor((W * H) / density), maxParticles);
   for (let i = 0; i < count; i++) {
     particles.push(new Particle());
   }
@@ -212,7 +224,7 @@ function initParticles() {
 
 function initRaindrops() {
   raindrops = [];
-  const maxRain = window.innerWidth > 900 ? 100 : 35; // Fewer drops on mobile for fps
+  const maxRain = window.innerWidth <= 768 ? 20 : 80;
   for (let i = 0; i < maxRain; i++) {
     raindrops.push(new RainDrop());
   }
@@ -311,19 +323,14 @@ const hamburger = document.getElementById('hamburger');
 const navLinksEl = document.getElementById('nav-links');
 hamburger.addEventListener('click', () => {
   const open = navLinksEl.classList.toggle('open');
+  hamburger.classList.toggle('active', open);
   hamburger.setAttribute('aria-expanded', open);
-  const spans = hamburger.querySelectorAll('span');
-  if (open) {
-    spans[0].style.transform = 'translateY(7px) rotate(45deg)';
-    spans[1].style.opacity = '0';
-    spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
-  } else {
-    spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
-  }
+  document.body.style.overflow = open ? 'hidden' : '';
 });
 navLinks.forEach(l => l.addEventListener('click', () => {
   navLinksEl.classList.remove('open');
-  hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+  hamburger.classList.remove('active');
+  document.body.style.overflow = '';
 }));
 
 // ============================================================
@@ -417,34 +424,51 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ============================================================
-// PARALLAX HERO ORBS
+// PARALLAX HERO ORBS (Desktop only)
 // ============================================================
-document.addEventListener('mousemove', e => {
-  const hero = document.getElementById('hero');
-  if (!hero) return;
-  const rect = hero.getBoundingClientRect();
-  if (rect.top < window.innerHeight && rect.bottom > 0) {
-    const dx = (e.clientX - window.innerWidth / 2) / window.innerWidth;
-    const dy = (e.clientY - window.innerHeight / 2) / window.innerHeight;
-    const orbs = document.querySelectorAll('.orb');
-    if (orbs[0]) orbs[0].style.transform = `translate(${dx * -30}px, ${dy * -30}px)`;
-    if (orbs[1]) orbs[1].style.transform = `translate(${dx * 22}px, ${dy * 22}px)`;
-    if (orbs[2]) orbs[2].style.transform = `translate(${dx * -14}px, ${dy * 14}px)`;
-  }
-});
+if (!isTouchDevice) {
+  document.addEventListener('mousemove', e => {
+    const hero = document.getElementById('hero');
+    if (!hero) return;
+    const rect = hero.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      const dx = (e.clientX - window.innerWidth / 2) / window.innerWidth;
+      const dy = (e.clientY - window.innerHeight / 2) / window.innerHeight;
+      const orbs = document.querySelectorAll('.orb');
+      if (orbs[0]) orbs[0].style.transform = `translate(${dx * -30}px, ${dy * -30}px)`;
+      if (orbs[1]) orbs[1].style.transform = `translate(${dx * 22}px, ${dy * 22}px)`;
+      if (orbs[2]) orbs[2].style.transform = `translate(${dx * -14}px, ${dy * 14}px)`;
+    }
+  });
+}
 
 // ============================================================
-// 3D TILT CARDS
+// SMOOTH 3D TILT CARDS (Desktop only)
 // ============================================================
-document.querySelectorAll('.skill-card, .timeline-card, .edu-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    const rx = ((e.clientY - rect.top - rect.height / 2) / (rect.height / 2)) * -5;
-    const ry = ((e.clientX - rect.left - rect.width / 2) / (rect.width / 2)) * 5;
-    card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+if (!isTouchDevice) {
+  const tiltCards = document.querySelectorAll('.skill-card, .timeline-card, .edu-card, .bento-card, .contact-item, .float-card');
+  const tiltSettings = { strength: 5, scale: 1.04 };
+
+  tiltCards.forEach(card => {
+    card.style.transition = 'transform 0.08s ease-out, box-shadow 0.3s ease, border-color 0.3s ease';
+    card.style.willChange = 'transform';
+
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -tiltSettings.strength;
+      const rotateY = ((x - centerX) / centerX) * tiltSettings.strength;
+      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${tiltSettings.scale}, ${tiltSettings.scale}, ${tiltSettings.scale})`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    });
   });
-  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
-});
+}
 
 // ============================================================
 // PROJECT CARD GLOW FOLLOW
