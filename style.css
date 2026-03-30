@@ -19,9 +19,9 @@
   --accent-1:     rgba(220,220,235,0.95);
   --accent-2:     rgba(180,200,220,0.8);
   --accent-glow:  rgba(100,200,255,0.15);
-  --text-primary: #ffffff;
-  --text-secondary: #d4d4d4;
-  --text-muted:   #808080;
+  --text-primary: #e8e8ec;
+  --text-secondary: #a0a0b0;
+  --text-muted:   #606070;
   --gradient-main: linear-gradient(135deg, #e0e0e0, #c0c0c0);
   --gradient-text: linear-gradient(90deg, #ffffff, #d0d0d0, #b0b0b0);
   --shadow-card:  0 8px 40px rgba(0,0,0,0.8);
@@ -853,7 +853,13 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
   border-radius: 100px;
   margin-bottom: 14px;
 }
-.section-title { font-size: clamp(2rem, 4vw, 2.8rem); color: var(--text-primary); }
+.section-title { 
+  font-size: clamp(2rem, 4vw, 2.8rem); 
+  background: linear-gradient(135deg, #e0e0e8 0%, #a0a0b0 50%, #c0c0d0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 /* ---- Buttons ---- */
 .btn {
@@ -1137,11 +1143,17 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
   animation: fadeInDown 0.8s 0.5s ease both;
 }
 .title-typed {
-  color: var(--accent-1);
+  background: linear-gradient(90deg, #c0c0d0, #e0e0f0, #a0a0b0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-weight: 600;
 }
 .title-cursor {
-  color: var(--accent-1);
+  background: linear-gradient(90deg, #c0c0d0, #e0e0f0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-weight: 300;
   animation: blink 1s step-end infinite;
 }
@@ -1185,7 +1197,7 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
   font-family: var(--font-main);
   font-size: 2.2rem;
   font-weight: 900;
-  background: var(--gradient-text);
+  background: linear-gradient(135deg, #e8e8f0 0%, #b0b0c8 50%, #d0d0e0 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1437,7 +1449,8 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
 }
 .job-title {
   font-size: 1.2rem;
-  color: var(--text-primary);
+  color: #d8d8e0;
+  font-weight: 600;
 }
 .company-name {
   display: block;
@@ -1552,7 +1565,7 @@ h1,h2,h3,h4 { font-family: var(--font-main); font-weight: 700; line-height: 1.2;
 .skill-name {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: #e0e0e8;
   margin-bottom: 10px;
 }
 .skill-desc {
