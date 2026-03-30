@@ -35,73 +35,51 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 .logo-vv {
   display: flex;
   flex-direction: column;
-  line-height: 0.88;
+  line-height: 1;
   cursor: default;
-  position: relative;
   text-decoration: none;
 }
-.logo-vv .line1,
+.logo-vv .line1 {
+  font-family: 'Russo One', sans-serif;
+  font-size: 28px;
+  font-style: italic;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #e8e8e8 0%, #ffffff 50%, #d4a5ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(168,85,247,0.5);
+  transition: all 0.3s;
+}
 .logo-vv .line2 {
   font-family: 'Russo One', sans-serif;
   font-size: 28px;
   font-style: italic;
-  letter-spacing: -1px;
-  background: linear-gradient(120deg, #ffffff 0%, #c084fc 40%, #a855f7 70%, #7c3aed 100%);
+  letter-spacing: 2px;
+  color: #a855f7;
+  text-shadow: 0 0 15px rgba(168,85,247,0.6);
+  -webkit-text-stroke: 0.5px rgba(168,85,247,0.5);
+  transition: all 0.3s;
+}
+.logo-vv:hover .line1 {
+  background: linear-gradient(135deg, #ffffff 0%, #d4a5ff 50%, #c084fc 100%);
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
-  filter: drop-shadow(0 0 8px rgba(168,85,247,0.4));
-  transition: filter 0.3s;
-  position: relative;
-  overflow: hidden;
+  text-shadow: 0 0 30px rgba(192,132,252,0.8);
 }
-.logo-vv .line2 {
-  -webkit-text-stroke: 1px #a855f7;
-  opacity: 0.8;
-  background: linear-gradient(120deg, #c084fc 0%, #a855f7 50%, #7c3aed 100%);
-  filter: drop-shadow(0 0 6px rgba(168,85,247,0.25));
-}
-.logo-vv .line1::before,
-.logo-vv .line2::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-  animation: shine 3s infinite;
-}
-.logo-vv .line2::before {
-  animation-delay: 0.3s;
-}
-@keyframes shine {
-  0% { left: -100%; }
-  50%, 100% { left: 200%; }
-}
-.logo-vv::after {
-  content: '';
-  position: absolute;
-  right: -10px;
-  top: 8px;
-  width: 3px;
-  height: 80%;
-  background: linear-gradient(180deg, #a855f7, transparent);
-  border-radius: 2px;
-}
-.logo-vv:hover .line1,
-.logo-vv:hover .line2 { 
-  filter: drop-shadow(0 0 18px rgba(192,132,252,0.8)); 
+.logo-vv:hover .line2 {
+  color: #c084fc;
+  text-shadow: 0 0 25px rgba(192,132,252,0.8);
 }
 
 /* Logo sizes for different places */
 .nav-logo .logo-vv .line1,
-.nav-logo .logo-vv .line2 { font-size: 22px; }
+.nav-logo .logo-vv .line2 { font-size: 20px; }
 .loader-logo .logo-vv .line1,
 .loader-logo .logo-vv .line2 { font-size: 52px; }
 .footer-logo-vv .line1,
-.footer-logo-vv .line2 { font-size: 32px; }
+.footer-logo-vv .line2 { font-size: 36px; }
 
 body {
   background: var(--bg-dark);
