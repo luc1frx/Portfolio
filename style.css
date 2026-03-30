@@ -38,86 +38,58 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   cursor: default;
   text-decoration: none;
   line-height: 1;
-  overflow: hidden;
 }
 .logo-vv .line1 {
   font-family: 'Russo One', sans-serif;
   font-size: 28px;
   font-style: italic;
   letter-spacing: -1px;
-  background: linear-gradient(90deg, #ffffff, #d4b8ff, #a855f7, #ffffff);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(168,85,247,0.5);
+  background: linear-gradient(90deg, #c084fc, #ffffff, #a855f7);
   background-clip: text;
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: logoShine 4s ease-in-out infinite;
-  position: relative;
-}
-.logo-vv .line1::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  animation: shineSweep 4s ease-in-out infinite;
+  background-size: 200% 100%;
+  animation: textFill 4s ease-in-out infinite;
 }
 .logo-vv .line2 {
   font-family: 'Russo One', sans-serif;
   font-size: 28px;
   font-style: italic;
   letter-spacing: -1px;
-  background: linear-gradient(90deg, #a855f7, #d4b8ff, #ffffff, #a855f7);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(168,85,247,0.5);
+  background: linear-gradient(90deg, #a855f7, #c084fc, #ffffff);
   background-clip: text;
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: logoShine2 4s ease-in-out infinite;
-  animation-delay: 0.8s;
-  position: relative;
+  background-size: 200% 100%;
+  animation: textFill2 4s ease-in-out infinite;
+  animation-delay: 2s;
 }
-.logo-vv .line2::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  animation: shineSweep2 4s ease-in-out infinite;
-  animation-delay: 0.8s;
+@keyframes textFill {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
-@keyframes logoShine {
-  0%, 100% { background-position: 100% 0; }
-  50% { background-position: 0% 0; }
-}
-@keyframes logoShine2 {
-  0%, 100% { background-position: 100% 0; }
-  50% { background-position: 0% 0; }
-}
-@keyframes shineSweep {
-  0% { left: -100%; }
-  50%, 100% { left: 200%; }
-}
-@keyframes shineSweep2 {
-  0% { left: -100%; }
-  50%, 100% { left: 200%; }
+@keyframes textFill2 {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 /* Nav logo */
 .nav-logo .logo-vv .line1,
-.nav-logo .logo-vv .line2 { font-size: 20px; }
+.nav-logo .logo-vv .line2 { font-size: 20px; -webkit-text-stroke-width: 1px; }
 
 /* Loader logo - tight spacing */
 .loader-logo .logo-vv { line-height: 1; }
 .loader-logo .logo-vv .line1,
-.loader-logo .logo-vv .line2 { font-size: 52px; }
+.loader-logo .logo-vv .line2 { font-size: 52px; -webkit-text-stroke-width: 2px; }
 
 /* Footer logo - slight space */
 .footer-logo-vv { line-height: 1.1; }
 .footer-logo-vv .line1,
-.footer-logo-vv .line2 { font-size: 36px; }
+.footer-logo-vv .line2 { font-size: 36px; -webkit-text-stroke-width: 1.5px; }
 
 body {
   background: var(--bg-dark);
