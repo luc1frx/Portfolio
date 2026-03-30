@@ -40,12 +40,12 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   position: relative;
   text-decoration: none;
 }
-.logo-vv .line1 {
+.logo-vv .line1,
+.logo-vv .line2 {
   font-family: 'Russo One', sans-serif;
   font-size: 28px;
   font-style: italic;
   letter-spacing: -1px;
-  color: #a855f7;
   background: linear-gradient(120deg, #ffffff 0%, #c084fc 40%, #a855f7 70%, #7c3aed 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -56,33 +56,29 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   position: relative;
   overflow: hidden;
 }
-.logo-vv .line1::before {
+.logo-vv .line2 {
+  -webkit-text-stroke: 1px #a855f7;
+  opacity: 0.8;
+  background: linear-gradient(120deg, #c084fc 0%, #a855f7 50%, #7c3aed 100%);
+  filter: drop-shadow(0 0 6px rgba(168,85,247,0.25));
+}
+.logo-vv .line1::before,
+.logo-vv .line2::before {
   content: '';
   position: absolute;
   top: 0;
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
   animation: shine 3s infinite;
+}
+.logo-vv .line2::before {
+  animation-delay: 0.3s;
 }
 @keyframes shine {
   0% { left: -100%; }
   50%, 100% { left: 200%; }
-}
-.logo-vv .line2 {
-  font-family: 'Russo One', sans-serif;
-  font-size: 28px;
-  font-style: italic;
-  letter-spacing: -1px;
-  color: transparent;
-  -webkit-text-stroke: 1.5px #a855f7;
-  background: transparent;
-  -webkit-background-clip: initial;
-  background-clip: initial;
-  opacity: 0.75;
-  transition: opacity 0.3s, filter 0.3s;
-  filter: drop-shadow(0 0 6px rgba(168,85,247,0.25));
 }
 .logo-vv::after {
   content: '';
@@ -94,8 +90,10 @@ html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   background: linear-gradient(180deg, #a855f7, transparent);
   border-radius: 2px;
 }
-.logo-vv:hover .line1 { filter: drop-shadow(0 0 18px rgba(192,132,252,0.8)); }
-.logo-vv:hover .line2 { opacity: 1; filter: drop-shadow(0 0 12px rgba(168,85,247,0.6)); }
+.logo-vv:hover .line1,
+.logo-vv:hover .line2 { 
+  filter: drop-shadow(0 0 18px rgba(192,132,252,0.8)); 
+}
 
 /* Logo sizes for different places */
 .nav-logo .logo-vv .line1,
