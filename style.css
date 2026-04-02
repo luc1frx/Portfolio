@@ -398,6 +398,11 @@ button { border: none; background: none; font: inherit; color: inherit; cursor: 
   filter: drop-shadow(0 0 6px rgba(6,182,212,0.3));
   transition: filter 0.3s;
 }
+.logo-vv .line1 .dot {
+  color: #00fbfb;
+  -webkit-text-fill-color: #00fbfb;
+  filter: drop-shadow(0 0 8px rgba(0, 251, 251, 0.8));
+}
 .logo-vv .line2 {
   font-family: var(--font-h);
   font-weight: 700;
@@ -410,14 +415,7 @@ button { border: none; background: none; font: inherit; color: inherit; cursor: 
   filter: drop-shadow(0 0 4px rgba(6,182,212,0.2));
 }
 .logo-vv::after {
-  content: '';
-  position: absolute;
-  right: -8px;
-  top: 4px;
-  width: 2px;
-  height: 80%;
-  background: linear-gradient(180deg, var(--accent), transparent);
-  border-radius: 2px;
+  display: none;
 }
 .logo-vv:hover .line1 { filter: drop-shadow(0 0 14px rgba(6,182,212,0.7)); }
 .logo-vv:hover .line2 { opacity: 1; filter: drop-shadow(0 0 10px rgba(6,182,212,0.5)); }
