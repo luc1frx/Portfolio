@@ -521,12 +521,12 @@ h3 { font-size: clamp(16px,2.5vw,20px); }
   position: fixed; top: 0; left: 0; right: 0; height: var(--nav);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 20px; z-index: 1000;
-  background: rgba(5,5,16,0.7);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,255,255,0.03);
+  background: transparent;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
   transition: background 0.3s, height 0.3s;
 }
-.navbar.scrolled { background: rgba(5,5,16,0.92); }
+.navbar.scrolled { background: rgba(0,0,0,0.8); }
 .nav-logo { display: flex; align-items: center; cursor: pointer; }
 .nav-logo.logo-vv::after { right: -6px; top: 2px; height: 75%; width: 2px; }
 .nav-links { display: none; }
@@ -596,6 +596,7 @@ h3 { font-size: clamp(16px,2.5vw,20px); }
   min-height: 100vh; display: flex; align-items: center;
   padding: calc(var(--nav) + 32px) 0 48px;
   position: relative; z-index: 1;
+  background: transparent;
 }
 .hero-grid { display: flex; flex-direction: column; align-items: center; gap: 40px; }
 .hero-text { text-align: center; max-width: 580px; }
