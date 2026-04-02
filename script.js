@@ -1,141 +1,28 @@
 /* ============================================================
-   VARUN VERMA — PORTFOLIO
+   VARUN VERMA — PORTFOLIO V3
+   Free-floating bright dots, interactive orbs, parallax
    ============================================================ */
 (function () {
   'use strict';
 
-  document.addEventListener('DOMContentLoaded', function () {
-    initCanvas();
-    initCursor();
-    initNavbar();
-    initMobileMenu();
-    initSmoothScroll();
-    initScrollSpy();
-    initForm();
-  });
+  // ==================== LOADING SCREEN ====================
+  var loader = document.getElementById('loader');
+  var barFill = document.getElementById('loader-bar-fill');
+  var progress = 0;
+  var loadTimer;
 
-  // ==================== SPIDER-WEB PARTICLES ====================
-  function initCanvas() {
-    var canvas = document.getElementById('bg-canvas');
-    if (!canvas) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { canvas.style.display = 'none'; return; }
-    
-    var ctx = canvas.getContext('2d');
-    var W, H, dots = [], mouse = { x: -9999, y: -9999 };
-    var isMobile = window.innerWidth < 768;
-
-    function resize() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-      createDots();
-    }
-
-    function createDots() {
-      dots = [];
-      var count = isMobile ? 20 : 35;
-      for (var i = 0; i < count; i++) {
-        dots.push({
-          x: Math.random() * W,
-          y: Math.random() * H,
-          vx: (Math.random() - 0.5) * 0.2,
-          vy: (Math.random() - 0.5) * 0.2,
-          r: Math.random() * 1.2 + 0.8,
-          a: Math.random() * 0.3 + 0.15
-        });
+  function startLoader() {
+    // Generate loader particles
+    var pCont = document.getElementById('loader-particles');
+    if (pCont) {
+      for (var i = 0; i < 30; i++) {
+        var p = document.createElement('div');
+        p.className = 'loader-particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() * 3 + 's';
+        p.style.animationDuration = (2 + Math.random() * 2) + 's';
+        pCont.appendChild(p);
       }
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      var time = Date.now() * 0.001;
-
-      for (var i = 0; i < dots.length; i++) {
-        var d = dots[i];
-        d.x += d.vx;
-        d.y += d.vy;
-        d.x += Math.sin(time * 0.2 + i * 0.4) * 0.08;
-        d.y += Math.cos(time * 0.2 + i * 0.4) * 0.08;
-
-        var dx = mouse.x - d.x;
-        var dy = mouse.y - d.y;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120 && dist > 0) {
-          var force = (120 - dist) / 120;
-          d.vx += (dx / dist) * force * 0.03;
-          d.vy += (dy / dist) * force * 0.03;
-        }
-
-        d.vx *= 0.995;
-        d.vy *= 0.995;
-
-        if (d.x < -10) d.x = W + 10;
-        if (d.x > W + 10) d.x = -10;
-        if (d.y < -10) d.y = H + 10;
-        if (d.y > H + 10) d.y = -10;
-      }
-
-      var maxDist = isMobile ? 60 : 100;
-      for (var i = 0; i < dots.length; i++) {
-        for (var j = i + 1; j < dots.length; j++) {
-          var a = dots[i], b = dots[j];
-          var cdx = b.x - a.x, cdy = b.y - a.y;
-          var cd = Math.sqrt(cdx * cdx + cdy * cdy);
-          if (cd < maxDist) {
-            var alpha = Math.pow(1 - cd / maxDist, 2) * 0.1;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = 'rgba(0, 251, 251, ' + alpha + ')';
-            ctx.lineWidth = 0.4;
-            ctx.stroke();
-          }
-        }
-      }
-
-      if (mouse.x > -9000) {
-        var cursorRange = isMobile ? 120 : 150;
-        for (var i = 0; i < dots.length; i++) {
-          var d = dots[i];
-          var cdx = mouse.x - d.x, cdy = mouse.y - d.y;
-          var cd = Math.sqrt(cdx * cdx + cdy * cdy);
-          if (cd < cursorRange) {
-            var alpha = Math.pow(1 - cd / cursorRange, 1.5) * 0.2;
-            ctx.beginPath();
-            ctx.moveTo(mouse.x, mouse.y);
-            ctx.lineTo(d.x, d.y);
-            ctx.strokeStyle = 'rgba(0, 251, 251, ' + alpha + ')';
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      }
-
-      for (var i = 0; i < dots.length; i++) {
-        var d = dots[i];
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 251, 251, ' + d.a + ')';
-        ctx.fill();
-      }
-
-      requestAnimationFrame(draw);
-    }
-
-    window.addEventListener('resize', resize);
-    resize();
-
-    document.addEventListener('mousemove', function (e) {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    });
-
-    document.addEventListener('mouseleave', function () {
-      mouse.x = -9999;
-      mouse.y = -9999;
-    });
-
-    draw();
-  }
     }
 
     loadTimer = setInterval(function () {
@@ -170,6 +57,7 @@
     if (inited) return;
     inited = true;
     initCanvas();
+    initOrbs();
     initCursor();
     initScrollProgress();
     initHeroEntrance();
@@ -186,7 +74,6 @@
     initScrollSpy();
     initParallax();
     initBgParallax();
-    initBgParallax();
     initForm();
   }
 
@@ -194,11 +81,9 @@
   function initCanvas() {
     var canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { canvas.style.display = 'none'; return; }
-    
     var ctx = canvas.getContext('2d');
     var W, H, dots = [], mouse = { x: -9999, y: -9999 };
-    var isMobile = window.innerWidth < 768;
+    var isMobile = false;
 
     function resize() {
       W = canvas.width = window.innerWidth;
@@ -209,15 +94,16 @@
 
     function createDots() {
       dots = [];
-      var count = isMobile ? 25 : 40;
+      var count = isMobile ? 30 : Math.min(70, Math.floor((W * H) / 18000));
       for (var i = 0; i < count; i++) {
         dots.push({
           x: Math.random() * W,
           y: Math.random() * H,
-          vx: (Math.random() - 0.5) * 0.3,
-          vy: (Math.random() - 0.5) * 0.3,
-          r: Math.random() * 1.5 + 1,
-          a: Math.random() * 0.4 + 0.2
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          r: Math.random() * 2 + 0.8,
+          a: Math.random() * 0.5 + 0.3,
+          hue: Math.random() > 0.5 ? 'cyan' : 'white'
         });
       }
     }
@@ -226,198 +112,166 @@
       ctx.clearRect(0, 0, W, H);
       var time = Date.now() * 0.001;
 
+      // Update positions
       for (var i = 0; i < dots.length; i++) {
         var d = dots[i];
         d.x += d.vx;
         d.y += d.vy;
-        d.x += Math.sin(time * 0.3 + i * 0.5) * 0.1;
-        d.y += Math.cos(time * 0.3 + i * 0.5) * 0.1;
 
+        // Gentle sine drift
+        d.x += Math.sin(time * 0.5 + i * 0.7) * 0.15;
+        d.y += Math.cos(time * 0.4 + i * 0.5) * 0.15;
+
+        // Mouse attraction (spider-web: particles pull toward cursor)
         var dx = mouse.x - d.x;
         var dy = mouse.y - d.y;
         var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 150 && dist > 0) {
-          var force = (150 - dist) / 150;
-          d.vx += (dx / dist) * force * 0.05;
-          d.vy += (dy / dist) * force * 0.05;
+        if (dist < 200 && dist > 0) {
+          var force = (200 - dist) / 200;
+          d.vx += (dx / dist) * force * 0.08;
+          d.vy += (dy / dist) * force * 0.08;
         }
 
-        d.vx *= 0.99;
-        d.vy *= 0.99;
+        // Damping
+        d.vx *= 0.995;
+        d.vy *= 0.995;
 
+        // Wrap
         if (d.x < -10) d.x = W + 10;
         if (d.x > W + 10) d.x = -10;
         if (d.y < -10) d.y = H + 10;
         if (d.y > H + 10) d.y = -10;
       }
 
-      var maxDist = isMobile ? 80 : 120;
+      // Draw connections BETWEEN nearby particles (web effect)
+      var maxDist = isMobile ? 100 : 140;
       for (var i = 0; i < dots.length; i++) {
         for (var j = i + 1; j < dots.length; j++) {
           var a = dots[i], b = dots[j];
           var cdx = b.x - a.x, cdy = b.y - a.y;
           var cd = Math.sqrt(cdx * cdx + cdy * cdy);
           if (cd < maxDist) {
-            var alpha = Math.pow(1 - cd / maxDist, 2) * 0.12;
+            var alpha = Math.pow(1 - cd / maxDist, 2) * 0.15;
+            // Brighten connections near mouse
+            var midX = (a.x + b.x) / 2, midY = (a.y + b.y) / 2;
+            var mDist = Math.sqrt((midX - mouse.x) ** 2 + (midY - mouse.y) ** 2);
+            if (mDist < 150) {
+              alpha = Math.pow(1 - cd / maxDist, 2) * 0.4;
+            }
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = 'rgba(0, 251, 251, ' + alpha + ')';
+            ctx.strokeStyle = 'rgba(6, 182, 212, ' + alpha + ')';
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         }
       }
 
+      // Draw spider-web lines from cursor to nearby particles
       if (mouse.x > -9000) {
-        var cursorRange = isMobile ? 150 : 180;
+        var cursorRange = isMobile ? 180 : 220;
         for (var i = 0; i < dots.length; i++) {
           var d = dots[i];
           var cdx = mouse.x - d.x, cdy = mouse.y - d.y;
           var cd = Math.sqrt(cdx * cdx + cdy * cdy);
           if (cd < cursorRange) {
-            var alpha = Math.pow(1 - cd / cursorRange, 1.5) * 0.25;
+            var alpha = Math.pow(1 - cd / cursorRange, 1.5) * 0.35;
             ctx.beginPath();
             ctx.moveTo(mouse.x, mouse.y);
             ctx.lineTo(d.x, d.y);
-            ctx.strokeStyle = 'rgba(0, 251, 251, ' + alpha + ')';
-            ctx.lineWidth = 0.6;
+            ctx.strokeStyle = 'rgba(6, 182, 212, ' + alpha + ')';
+            ctx.lineWidth = 0.8;
             ctx.stroke();
           }
         }
+
+        // Cursor glow
+        var cursorGlow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 120);
+        cursorGlow.addColorStop(0, 'rgba(6, 182, 212, 0.06)');
+        cursorGlow.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, 120, 0, Math.PI * 2);
+        ctx.fillStyle = cursorGlow;
+        ctx.fill();
       }
 
+      // Draw dots
       for (var i = 0; i < dots.length; i++) {
         var d = dots[i];
+        var color = d.hue === 'cyan' ? 'rgba(6, 182, 212, ' + d.a + ')' : 'rgba(220, 230, 255, ' + d.a + ')';
+
+        // Glow
+        var glow = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r * 5);
+        glow.addColorStop(0, color);
+        glow.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r * 5, 0, Math.PI * 2);
+        ctx.fillStyle = glow;
+        ctx.fill();
+
+        // Core
         ctx.beginPath();
         ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 251, 251, ' + d.a + ')';
+        ctx.fillStyle = color;
         ctx.fill();
       }
 
       requestAnimationFrame(draw);
     }
 
+    document.addEventListener('mousemove', function (e) {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
     window.addEventListener('resize', resize);
     resize();
+    draw();
+  }
+
+  // ==================== INTERACTIVE ORBS ====================
+  function initOrbs() {
+    var orbs = document.querySelectorAll('[data-orb]');
+    if (!orbs.length) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
     document.addEventListener('mousemove', function (e) {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
     });
 
-    document.addEventListener('mouseleave', function () {
-      mouse.x = -9999;
-      mouse.y = -9999;
-    });
+    // Orbs react to mouse position - gentle magnetic pull
+    function animateOrbs() {
+      for (var i = 0; i < orbs.length; i++) {
+        var orb = orbs[i];
+        var rect = orb.getBoundingClientRect();
+        var ox = rect.left + rect.width / 2;
+        var oy = rect.top + rect.height / 2;
 
-    draw();
+        var dx = mouse.x - ox;
+        var dy = mouse.y - oy;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+
+        // Subtle magnetic attraction toward cursor
+        if (dist < 500 && dist > 0) {
+          var force = (500 - dist) / 500;
+          var pullX = (dx / dist) * force * 15;
+          var pullY = (dy / dist) * force * 15;
+          var current = orb.style.transform || '';
+          orb.style.transform = 'translate(' + pullX + 'px, ' + pullY + 'px)';
+        } else {
+          orb.style.transform = '';
+        }
+      }
+      requestAnimationFrame(animateOrbs);
+    }
+    animateOrbs();
   }
 
   // ==================== CUSTOM CURSOR ====================
-  function initCursor() {
-    var dot = document.getElementById('cursor-dot');
-    var ring = document.getElementById('cursor-ring');
-    if (!dot || !ring) return;
-
-    var mx = window.innerWidth / 2, my = window.innerHeight / 2;
-    var rx = mx, ry = my;
-
-    dot.style.left = mx + 'px';
-    dot.style.top = my + 'px';
-    ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-
-    document.addEventListener('mousemove', function (e) {
-      mx = e.clientX;
-      my = e.clientY;
-      dot.style.left = mx + 'px';
-      dot.style.top = my + 'px';
-    });
-
-    function follow() {
-      rx += (mx - rx) * 0.1;
-      ry += (my - ry) * 0.1;
-      ring.style.left = rx + 'px';
-      ring.style.top = ry + 'px';
-      requestAnimationFrame(follow);
-    }
-    follow();
-  }
-
-  // ==================== NAVBAR ====================
-  function initNavbar() {
-    var nav = document.getElementById('navbar');
-    if (!nav) return;
-    window.addEventListener('scroll', function () {
-      if (window.scrollY > 100) nav.classList.add('scrolled');
-      else nav.classList.remove('scrolled');
-    });
-  }
-
-  // ==================== MOBILE MENU ====================
-  function initMobileMenu() {
-    var hamburger = document.getElementById('hamburger');
-    var mobileMenu = document.getElementById('mobile-menu');
-    if (!hamburger || !mobileMenu) return;
-    hamburger.addEventListener('click', function () {
-      hamburger.classList.toggle('active');
-      mobileMenu.classList.toggle('open');
-    });
-  }
-
-  // ==================== SMOOTH SCROLL ====================
-  function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
-      anchor.addEventListener('click', function (e) {
-        var href = this.getAttribute('href');
-        if (href === '#') return;
-        var target = document.querySelector(href);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-  }
-
-  // ==================== SCROLL SPY ====================
-  function initScrollSpy() {
-    var sections = document.querySelectorAll('section[id]');
-    var navLinks = document.querySelectorAll('.nav-link');
-    window.addEventListener('scroll', function () {
-      var scrollY = window.scrollY;
-      sections.forEach(function (section) {
-        var sectionTop = section.offsetTop - 100;
-        var sectionId = section.getAttribute('id');
-        if (scrollY > sectionTop) {
-          navLinks.forEach(function (link) {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === '#' + sectionId) {
-              link.classList.add('active');
-            }
-          });
-        }
-      });
-    });
-  }
-
-  // ==================== CONTACT FORM ====================
-  function initForm() {
-    var form = document.getElementById('contact-form');
-    if (!form) return;
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var name = document.getElementById('name').value;
-      var email = document.getElementById('email').value;
-      var message = document.getElementById('message').value;
-      var mailto = 'mailto:varun.verma21feb@gmail.com?subject=Portfolio Contact from ' + encodeURIComponent(name) + '&body=' + encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message);
-      window.location.href = mailto;
-      alert('Thanks! Your email client will open.');
-      form.reset();
-    });
-  }
-})();
   function initCursor() {
     var dot = document.getElementById('cursor-dot');
     var ring = document.getElementById('cursor-ring');
