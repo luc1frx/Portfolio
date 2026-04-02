@@ -7,27 +7,27 @@
 
 :root {
   /* DESIGN SYSTEM TOKENS */
-  --surface: #131313;
-  --surface-container: #1c1b1b;
+  --surface: #0a0a0a;
+  --surface-container: #121212;
   --on-surface: #FFFFFF;
-  --on-surface-variant: #B9CAC9;
+  --on-surface-variant: #8a8a8a;
   --accent: #00fbfb;
-  --accent-glow: rgba(0, 251, 251, 0.2);
+  --accent-glow: rgba(0, 251, 251, 0.15);
   --font-header: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
   --radius: 0.15rem;
   --glass: blur(25px);
   
   /* Legacy aliases */
-  --bg: #131313;
-  --bg2: #1c1b1b;
-  --card: rgba(255,255,255,0.035);
-  --card-h: rgba(255,255,255,0.065);
-  --border: rgba(131, 148, 147, 0.15);
-  --border-h: rgba(255,255,255,0.14);
+  --bg: #0a0a0a;
+  --bg2: #121212;
+  --card: rgba(255,255,255,0.02);
+  --card-h: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.05);
+  --border-h: rgba(255,255,255,0.1);
   --t1: #FFFFFF;
-  --t2: #B9CAC9;
-  --t3: #55556a;
+  --t2: #8a8a8a;
+  --t3: #555555;
   --accent2: #3b82f6;
   --font-h: 'Space Grotesk', sans-serif;
   --font-b: 'Inter', sans-serif;
