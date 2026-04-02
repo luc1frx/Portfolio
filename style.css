@@ -34,7 +34,7 @@ a { color: inherit; text-decoration: none; }
 img { max-width: 100%; height: auto; display: block; }
 ul { list-style: none; }
 button { border: none; background: none; font: inherit; color: inherit; cursor: pointer; }
-.container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+.container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 16px; }
 
 /* ==================== LOADING SCREEN ==================== */
 .loader {
@@ -602,8 +602,8 @@ h3 { font-size: clamp(16px,2.5vw,20px); }
   padding: calc(var(--nav) + 32px) 0 48px;
   position: relative; z-index: 1;
 }
-.hero-grid { display: flex; flex-direction: column; align-items: center; gap: 40px; }
-.hero-text { text-align: center; max-width: 580px; }
+.hero-grid { display: flex; flex-direction: column; align-items: center; gap: 40px; padding: 0 16px; }
+.hero-text { text-align: center; max-width: 100%; width: 100%; }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 7px 16px; background: rgba(255,255,255,0.06);
@@ -642,8 +642,9 @@ h3 { font-size: clamp(16px,2.5vw,20px); }
   margin-bottom: 28px; max-width: 480px; margin-left: auto; margin-right: auto;
 }
 .hero-cta { display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; align-items: center; }
-.hero-stats { display: flex; align-items: center; justify-content: center; gap: 20px; }
-.stat { text-align: center; }
+.hero-stats { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+.stat { text-align: center; min-width: 70px; }
+.stat-sep { display: none; }
 .stat-num { font-family: var(--font-h); font-size: 28px; font-weight: 700; line-height: 1; }
 .stat-plus { font-family: var(--font-h); font-size: 18px; color: var(--accent); font-weight: 600; }
 .stat-label { display: block; font-size: 11px; color: var(--t3); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.08em; }
