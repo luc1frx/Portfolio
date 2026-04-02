@@ -57,7 +57,7 @@
     if (inited) return;
     inited = true;
     initCanvas();
-    initOrbs();
+    initParticles();
     initCursor();
     initScrollProgress();
     initHeroEntrance();
@@ -230,33 +230,62 @@
     draw();
   }
 
-  // ==================== INTERACTIVE ORBS ====================
-  function initOrbs() {
-    var orbs = document.querySelectorAll('[data-orb]');
-    if (!orbs.length) return;
+  // ==================== INTERACTIVE PARTICLES ====================
+  function initParticles() {
+    var particles = document.querySelectorAll('[data-particle]');
+    if (!particles.length) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    var mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    var mouse = { x: -1000, y: -1000 };
+    var activeParticle = null;
 
     document.addEventListener('mousemove', function (e) {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
     });
 
-    // Orbs react to mouse position - gentle magnetic pull
-    function animateOrbs() {
-      for (var i = 0; i < orbs.length; i++) {
-        var orb = orbs[i];
-        var rect = orb.getBoundingClientRect();
-        var ox = rect.left + rect.width / 2;
-        var oy = rect.top + rect.height / 2;
+    particles.forEach(function(particle) {
+      particle.addEventListener('mouseenter', function() {
+        activeParticle = particle;
+        particle.style.transform = 'scale(2)';
+        particle.style.opacity = '1';
+        particle.style.boxShadow = '0 0 25px var(--accent-glow)';
+      });
 
-        var dx = mouse.x - ox;
-        var dy = mouse.y - oy;
+      particle.addEventListener('mouseleave', function() {
+        activeParticle = null;
+        particle.style.transform = '';
+        particle.style.opacity = '';
+        particle.style.boxShadow = '';
+      });
+    });
+
+    function animateParticles() {
+      particles.forEach(function(particle) {
+        if (activeParticle === particle) return;
+        
+        var rect = particle.getBoundingClientRect();
+        var px = rect.left + rect.width / 2;
+        var py = rect.top + rect.height / 2;
+
+        var dx = mouse.x - px;
+        var dy = mouse.y - py;
         var dist = Math.sqrt(dx * dx + dy * dy);
 
-        // Subtle magnetic attraction toward cursor
-        if (dist < 500 && dist > 0) {
+        if (dist < 150) {
+          var pushX = -(dx / dist) * 20 * (1 - dist / 150);
+          var pushY = -(dy / dist) * 20 * (1 - dist / 150);
+          particle.style.transform = 'translate(' + pushX + 'px, ' + pushY + 'px) scale(1.3)';
+          particle.style.opacity = '0.6';
+        } else {
+          particle.style.transform = '';
+          particle.style.opacity = '';
+        }
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  }
           var force = (500 - dist) / 500;
           var pullX = (dx / dist) * force * 15;
           var pullY = (dy / dist) * force * 15;
