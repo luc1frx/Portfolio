@@ -56,8 +56,8 @@
   function initAll() {
     if (inited) return;
     inited = true;
+    initParticles();
     initCanvas();
-    initOrbs();
     initCursor();
     initScrollProgress();
     initHeroEntrance();
@@ -77,11 +77,61 @@
     initForm();
   }
 
-  // ==================== SPIDER-WEB CONSTELLATION PARTICLES ====================
+  // ==================== MODERN INTERACTIVE PARTICLES ====================
+  function initParticles() {
+    var container = document.getElementById('particles');
+    if (!container) return;
+    
+    // Clear any existing
+    container.innerHTML = '';
+    
+    // Create particles
+    var colors = ['#00fbfb', '#00fbfb', '#ffffff'];
+    var particleCount = window.innerWidth < 768 ? 15 : 25;
+    
+    for (var i = 0; i < particleCount; i++) {
+      var dot = document.createElement('div');
+      dot.className = 'particle-dot';
+      dot.style.left = Math.random() * 100 + '%';
+      dot.style.top = Math.random() * 100 + '%';
+      dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+      dot.style.animationDelay = Math.random() * -20 + 's';
+      dot.style.animationDuration = (15 + Math.random() * 10) + 's';
+      container.appendChild(dot);
+    }
+    
+    // Mouse interaction
+    var mouse = { x: -1000, y: -1000 };
+    var dots = container.querySelectorAll('.particle-dot');
+    
+    document.addEventListener('mousemove', function(e) {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+    
+    dots.forEach(function(dot) {
+      dot.addEventListener('mouseenter', function() {
+        dot.style.transform = 'scale(2)';
+        dot.style.opacity = '1';
+        dot.style.boxShadow = '0 0 20px #00fbfb';
+      });
+      
+      dot.addEventListener('mouseleave', function() {
+        dot.style.transform = '';
+        dot.style.opacity = '';
+        dot.style.boxShadow = '';
+      });
+    });
+  }
+
+  // ==================== CANVAS STARFIELD ====================
   function initCanvas() {
     var canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
-    var ctx = canvas.getContext('2d');
+    // Disable canvas for smoother performance - using CSS particles
+    canvas.style.display = 'none';
+    return;
+  }
     var W, H, dots = [], mouse = { x: -9999, y: -9999 };
     var isMobile = false;
 
