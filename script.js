@@ -5,11 +5,27 @@
   'use strict';
 
   document.addEventListener('DOMContentLoaded', function () {
-    // Hide loader immediately, no delay
+    initLoader();
     var loader = document.getElementById('loader');
-    if (loader) loader.classList.add('hidden');
+    setTimeout(function() { if (loader) loader.classList.add('hidden'); }, 1200);
     initAll();
   });
+
+  // ==================== LOADER PROGRESS ====================
+  function initLoader() {
+    var fill = document.getElementById('loader-bar-fill');
+    var percent = document.getElementById('loader-percent-num');
+    if (!fill || !percent) return;
+    
+    var progress = 0;
+    var interval = setInterval(function() {
+      progress += Math.random() * 15 + 5;
+      if (progress > 100) progress = 100;
+      fill.style.width = progress + '%';
+      percent.textContent = Math.floor(progress);
+      if (progress >= 100) clearInterval(interval);
+    }, 80);
+  }
 
   var inited = false;
   function initAll() {

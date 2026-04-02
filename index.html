@@ -14,43 +14,19 @@
 
   <!-- ==================== LOADING SCREEN ==================== -->
   <div class="loader" id="loader">
-    <!-- Animated grid background -->
-    <div class="loader-grid-bg"></div>
-    <!-- Floating particles in loader -->
-    <div class="loader-particles" id="loader-particles"></div>
-    <!-- Corner accents -->
-    <div class="loader-corner tl"></div>
-    <div class="loader-corner tr"></div>
-    <div class="loader-corner bl"></div>
-    <div class="loader-corner br"></div>
-    <div class="loader-inner">
-      <!-- Orbiting rings -->
-      <div class="loader-orbit">
-        <div class="orbit-ring o1"><div class="orbit-dot"></div></div>
-        <div class="orbit-ring o2"><div class="orbit-dot"></div></div>
-        <div class="orbit-ring o3"><div class="orbit-dot"></div></div>
-        <div class="orbit-ring o4"><div class="orbit-dot"></div></div>
-        <div class="orbit-ring o5"><div class="orbit-dot"></div></div>
-        <div class="orbit-ring o6"><div class="orbit-dot"></div></div>
+    <div class="loader-bg-grid"></div>
+    <div class="loader-content">
+      <div class="loader-logo-container">
+        <div class="loader-glow"></div>
+        <div class="loader-logo">VARUN<span class="accent">.</span></div>
       </div>
-      <!-- Center logo -->
-      <div class="loader-logo-wrap">
-        <div class="loader-logo-glow"></div>
-        <a href="#hero" class="logo-vv">
-          <span class="line1">VARUN<span class="dot">.</span></span>
-        </a>
-      </div>
-      <!-- Text -->
-      <div class="loader-bottom">
-        <div class="loader-bar">
-          <div class="loader-bar-fill" id="loader-bar-fill"></div>
+      <div class="loader-progress-wrap">
+        <div class="loader-progress-bar">
+          <div class="loader-progress-fill" id="loader-bar-fill"></div>
         </div>
-        <p class="loader-text">
-          <span class="loader-char" style="--i:0">L</span><span class="loader-char" style="--i:1">o</span><span class="loader-char" style="--i:2">a</span><span class="loader-char" style="--i:3">d</span><span class="loader-char" style="--i:4">i</span><span class="loader-char" style="--i:5">n</span><span class="loader-char" style="--i:6">g</span>
-          <span class="loader-space"></span>
-          <span class="loader-char" style="--i:7">E</span><span class="loader-char" style="--i:8">x</span><span class="loader-char" style="--i:9">p</span><span class="loader-char" style="--i:10">e</span><span class="loader-char" style="--i:11">r</span><span class="loader-char" style="--i:12">i</span><span class="loader-char" style="--i:13">e</span><span class="loader-char" style="--i:14">n</span><span class="loader-char" style="--i:15">c</span><span class="loader-char" style="--i:16">e</span>
-        </p>
+        <div class="loader-percent"><span id="loader-percent-num">0</span>%</div>
       </div>
+      <div class="loader-tagline">Preparing Experience</div>
     </div>
   </div>
 
