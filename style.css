@@ -6,24 +6,35 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #050510;
-  --bg2: #0a0a1a;
+  /* DESIGN SYSTEM TOKENS */
+  --surface: #131313;
+  --surface-container: #1c1b1b;
+  --on-surface: #FFFFFF;
+  --on-surface-variant: #B9CAC9;
+  --accent: #00fbfb;
+  --accent-glow: rgba(0, 251, 251, 0.2);
+  --font-header: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --radius: 0.15rem;
+  --glass: blur(25px);
+  
+  /* Legacy aliases */
+  --bg: #131313;
+  --bg2: #1c1b1b;
   --card: rgba(255,255,255,0.035);
   --card-h: rgba(255,255,255,0.065);
-  --border: rgba(255,255,255,0.06);
+  --border: rgba(131, 148, 147, 0.15);
   --border-h: rgba(255,255,255,0.14);
-  --t1: #f0f0f5;
-  --t2: #8b8b9e;
+  --t1: #FFFFFF;
+  --t2: #B9CAC9;
   --t3: #55556a;
-  --accent: #06b6d4;
   --accent2: #3b82f6;
-  --accent-glow: rgba(6,182,212,0.12);
   --font-h: 'Space Grotesk', sans-serif;
   --font-b: 'Inter', sans-serif;
-  --ease: cubic-bezier(0.4,0,0.2,1);
-  --ease-out: cubic-bezier(0,0,0.2,1);
-  --r: 14px;
-  --r-s: 10px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --r: 0.15rem;
+  --r-s: 0.15rem;
   --max: 1140px;
   --nav: 68px;
 }
@@ -399,9 +410,9 @@ button { border: none; background: none; font: inherit; color: inherit; cursor: 
   transition: filter 0.3s;
 }
 .logo-vv .line1 .dot {
-  color: #00fbfb;
-  -webkit-text-fill-color: #00fbfb;
-  filter: drop-shadow(0 0 8px rgba(0, 251, 251, 0.6));
+  color: var(--accent);
+  -webkit-text-fill-color: var(--accent);
+  filter: drop-shadow(0 0 8px var(--accent-glow));
 }
 .logo-vv .line2 {
   font-family: var(--font-h);
