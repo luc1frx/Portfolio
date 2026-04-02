@@ -161,7 +161,7 @@
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = 'rgba(6, 182, 212, ' + alpha + ')';
+            ctx.strokeStyle = 'rgba(0, 251, 251, ' + alpha + ')';
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -180,7 +180,7 @@
             ctx.beginPath();
             ctx.moveTo(mouse.x, mouse.y);
             ctx.lineTo(d.x, d.y);
-            ctx.strokeStyle = 'rgba(6, 182, 212, ' + alpha + ')';
+            ctx.strokeStyle = 'rgba(0, 251, 251, ' + alpha + ')';
             ctx.lineWidth = 0.8;
             ctx.stroke();
           }
@@ -188,7 +188,7 @@
 
         // Cursor glow
         var cursorGlow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 120);
-        cursorGlow.addColorStop(0, 'rgba(6, 182, 212, 0.06)');
+        cursorGlow.addColorStop(0, 'rgba(0, 251, 251, 0.06)');
         cursorGlow.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.beginPath();
         ctx.arc(mouse.x, mouse.y, 120, 0, Math.PI * 2);
@@ -199,7 +199,7 @@
       // Draw dots
       for (var i = 0; i < dots.length; i++) {
         var d = dots[i];
-        var color = d.hue === 'cyan' ? 'rgba(6, 182, 212, ' + d.a + ')' : 'rgba(220, 230, 255, ' + d.a + ')';
+        var color = d.hue === 'cyan' ? 'rgba(0, 251, 251, ' + d.a + ')' : 'rgba(220, 230, 255, ' + d.a + ')';
 
         // Glow
         var glow = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r * 5);
