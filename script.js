@@ -613,14 +613,14 @@
       
       var formData = new FormData(form);
       
-      fetch(form.action, {
+      fetch('https://formspree.io/f/xreoardb', {
         method: 'POST',
         body: formData,
         headers: {
           'Accept': 'application/json'
         }
       }).then(function(response) {
-        if (response.ok) {
+        if (response.ok || response.status === 200) {
           btn.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg> Sent!';
           btn.style.background = '#22c55e';
           btn.style.opacity = '1';
@@ -633,7 +633,8 @@
         } else {
           throw new Error('Form submission failed');
         }
-      }).catch(function() {
+      }).catch(function(err) {
+        console.error('Form error:', err);
         btn.innerHTML = 'Error!';
         btn.style.background = '#ef4444';
         btn.style.opacity = '1';
