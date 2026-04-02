@@ -77,13 +77,11 @@
     initForm();
   }
 
-  // ==================== SPIDER-WEB CONSTELLATION PARTICLES ====================
+  // ==================== CANVAS (DISABLED) ====================
   function initCanvas() {
     var canvas = document.getElementById('bg-canvas');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
-    var W, H, dots = [], mouse = { x: -9999, y: -9999 };
-    var isMobile = false;
+    if (canvas) canvas.style.display = 'none';
+  }
 
     function resize() {
       W = canvas.width = window.innerWidth;
@@ -104,9 +102,9 @@
           r: Math.random() * 2 + 0.8,
           a: Math.random() * 0.5 + 0.3,
           hue: Math.random() > 0.5 ? 'cyan' : 'white'
-        });
-      }
-    }
+    });
+  }
+})();
 
     function draw() {
       ctx.clearRect(0, 0, W, H);
