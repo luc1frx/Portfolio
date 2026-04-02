@@ -59,15 +59,13 @@
 
   <!-- ==================== BACKGROUND LAYERS ==================== -->
   <div class="bg-layers" id="bg-layers">
+    <!-- Canvas for particles -->
     <canvas id="bg-canvas"></canvas>
-    <!-- Glowing Orbs - interactive -->
-    <div class="orb orb-1" data-orb></div>
-    <div class="orb orb-2" data-orb></div>
-    <div class="orb orb-3" data-orb></div>
-    <div class="orb orb-4" data-orb></div>
-    <div class="orb orb-5" data-orb></div>
-    <!-- Gradient mesh -->
-    <div class="bg-mesh"></div>
+    <!-- Cyan Glow Effects -->
+    <div class="cyan-glow cyan-glow-1"></div>
+    <div class="cyan-glow cyan-glow-2"></div>
+    <!-- Spider Grid -->
+    <div class="spider-grid"></div>
   </div>
 
   <!-- ==================== CUSTOM CURSOR ==================== -->
@@ -517,7 +515,7 @@
             </div>
           </div>
         </div>
-        <form class="contact-form glass reveal d3" data-tilt id="contact-form">
+        <form class="contact-form glass reveal d3" data-tilt id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
           <div class="field"><input type="text" id="fn" placeholder=" " required autocomplete="name" /><label for="fn">Your Name</label></div>
           <div class="field"><input type="email" id="fe" placeholder=" " required autocomplete="email" /><label for="fe">Your Email</label></div>
           <div class="field"><textarea id="fm" placeholder=" " rows="5" required></textarea><label for="fm">Your Message</label></div>

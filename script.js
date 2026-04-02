@@ -15,7 +15,7 @@
   function initAll() {
     if (inited) return;
     inited = true;
-    // No background animation - clean minimal
+    initCanvas();
     initCursor();
     initScrollProgress();
     initHeroEntrance();
@@ -31,36 +31,55 @@
     initSmoothScroll();
     initScrollSpy();
     initParallax();
-    initBgParallax();
     initForm();
   }
 
-  // ==================== SPIDER-WEB CONSTELLATION PARTICLES ====================
+  // ==================== VISUALLY STUNNING PARTICLE SYSTEM ====================
   function initCanvas() {
     var canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
     var ctx = canvas.getContext('2d');
-    var W, H, dots = [], mouse = { x: -9999, y: -9999 };
+    var W, H, particles = [], mouse = { x: -9999, y: -9999 };
     var isMobile = false;
+    var animationId;
 
     function resize() {
       W = canvas.width = window.innerWidth;
       H = canvas.height = window.innerHeight;
       isMobile = W < 768;
-      createDots();
+      createParticles();
     }
 
-    function createDots() {
-      dots = [];
-      var count = isMobile ? 30 : Math.min(70, Math.floor((W * H) / 18000));
+    function createParticles() {
+      particles = [];
+      var count = isMobile ? 50 : 80;
+      
+      // Flowing ambient particles (small)
       for (var i = 0; i < count; i++) {
-        dots.push({
+        particles.push({
           x: Math.random() * W,
           y: Math.random() * H,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
-          r: Math.random() * 2 + 0.8,
-          a: Math.random() * 0.5 + 0.3
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          r: Math.random() * 1.5 + 0.5,
+          a: Math.random() * 0.4 + 0.2,
+          type: 'ambient',
+          phase: Math.random() * Math.PI * 2
+        });
+      }
+      
+      // Constellation nodes (larger, for web effect)
+      var nodeCount = isMobile ? 12 : 20;
+      for (var i = 0; i < nodeCount; i++) {
+        particles.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.2,
+          vy: (Math.random() - 0.5) * 0.2,
+          r: Math.random() * 2 + 2,
+          a: Math.random() * 0.3 + 0.5,
+          type: 'node',
+          phase: Math.random() * Math.PI * 2
         });
       }
     }
@@ -68,264 +87,164 @@
     function draw() {
       ctx.clearRect(0, 0, W, H);
       var time = Date.now() * 0.001;
+      var cyan = 'rgba(0, 255, 255, ';
+      var white = 'rgba(255, 255, 255, ';
 
-      // Update positions
-      for (var i = 0; i < dots.length; i++) {
-        var d = dots[i];
-        d.x += d.vx;
-        d.y += d.vy;
-
-        // Gentle sine drift
-        d.x += Math.sin(time * 0.5 + i * 0.7) * 0.15;
-        d.y += Math.cos(time * 0.4 + i * 0.5) * 0.15;
-
-        // Mouse attraction (spider-web: particles pull toward cursor)
-        var dx = mouse.x - d.x;
-        var dy = mouse.y - d.y;
+      // Update and draw all particles
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        
+        // Sinusoidal drifting motion
+        p.x += p.vx + Math.sin(time * 0.3 + p.phase) * 0.2;
+        p.y += p.vy + Math.cos(time * 0.25 + p.phase) * 0.15;
+        
+        // Mouse attraction
+        var dx = mouse.x - p.x;
+        var dy = mouse.y - p.y;
         var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 200 && dist > 0) {
-          var force = (200 - dist) / 200;
-          d.vx += (dx / dist) * force * 0.08;
-          d.vy += (dy / dist) * force * 0.08;
+        
+        if (dist < 180 && dist > 0) {
+          var force = (180 - dist) / 180;
+          p.vx += (dx / dist) * force * 0.05;
+          p.vy += (dy / dist) * force * 0.05;
         }
-
+        
         // Damping
-        d.vx *= 0.995;
-        d.vy *= 0.995;
-
-        // Wrap
-        if (d.x < -10) d.x = W + 10;
-        if (d.x > W + 10) d.x = -10;
-        if (d.y < -10) d.y = H + 10;
-        if (d.y > H + 10) d.y = -10;
+        p.vx *= 0.99;
+        p.vy *= 0.99;
+        
+        // Wrap around screen
+        if (p.x < -10) p.x = W + 10;
+        if (p.x > W + 10) p.x = -10;
+        if (p.y < -10) p.y = H + 10;
+        if (p.y > H + 10) p.y = -10;
+        
+        // Draw based on type
+        if (p.type === 'node') {
+          // Constellation nodes - brighter with glow
+          var glowSize = p.r * 4;
+          var gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowSize);
+          
+          // Brighten near mouse
+          var brightness = dist < 150 ? 1.3 : 1;
+          
+          gradient.addColorStop(0, cyan + (p.a * brightness) + ')');
+          gradient.addColorStop(0.4, cyan + (p.a * 0.5 * brightness) + ')');
+          gradient.addColorStop(1, 'rgba(0,0,0,0)');
+          
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, glowSize, 0, Math.PI * 2);
+          ctx.fillStyle = gradient;
+          ctx.fill();
+          
+          // Core
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = cyan + (p.a + 0.3) + ')';
+          ctx.fill();
+        } else {
+          // Ambient particles - subtle glow
+          var glowSize = p.r * 3;
+          var gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowSize);
+          gradient.addColorStop(0, white + p.a + ')');
+          gradient.addColorStop(1, 'rgba(0,0,0,0)');
+          
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, glowSize, 0, Math.PI * 2);
+          ctx.fillStyle = gradient;
+          ctx.fill();
+        }
       }
-
-      // Draw connections BETWEEN nearby particles (web effect)
-      var maxDist = isMobile ? 100 : 140;
-      for (var i = 0; i < dots.length; i++) {
-        for (var j = i + 1; j < dots.length; j++) {
-          var a = dots[i], b = dots[j];
+      
+      // Draw constellation web (connect nearby nodes)
+      var nodes = particles.filter(function(p) { return p.type === 'node'; });
+      var maxDist = isMobile ? 100 : 150;
+      
+      for (var i = 0; i < nodes.length; i++) {
+        for (var j = i + 1; j < nodes.length; j++) {
+          var a = nodes[i], b = nodes[j];
           var cdx = b.x - a.x, cdy = b.y - a.y;
           var cd = Math.sqrt(cdx * cdx + cdy * cdy);
+          
           if (cd < maxDist) {
-            var alpha = Math.pow(1 - cd / maxDist, 2) * 0.15;
-            // Brighten connections near mouse
+            var alpha = Math.pow(1 - cd / maxDist, 2) * 0.25;
+            
+            // Boost near mouse
             var midX = (a.x + b.x) / 2, midY = (a.y + b.y) / 2;
             var mDist = Math.sqrt((midX - mouse.x) ** 2 + (midY - mouse.y) ** 2);
-            if (mDist < 150) {
-              alpha = Math.pow(1 - cd / maxDist, 2) * 0.4;
+            if (mDist < 120) {
+              alpha = Math.pow(1 - cd / maxDist, 1.5) * 0.5;
             }
+            
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = 'rgba(255, 255, 255, ' + alpha + ')';
-            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = cyan + alpha + ')';
+            ctx.lineWidth = 0.6;
             ctx.stroke();
           }
         }
       }
-
-      // Draw spider-web lines from cursor to nearby particles
+      
+      // Mouse tether effect - connect cursor to nearby nodes
       if (mouse.x > -9000) {
-        var cursorRange = isMobile ? 180 : 220;
-        for (var i = 0; i < dots.length; i++) {
-          var d = dots[i];
-          var cdx = mouse.x - d.x, cdy = mouse.y - d.y;
+        var cursorRange = isMobile ? 150 : 200;
+        
+        for (var i = 0; i < nodes.length; i++) {
+          var p = nodes[i];
+          var cdx = mouse.x - p.x, cdy = mouse.y - p.y;
           var cd = Math.sqrt(cdx * cdx + cdy * cdy);
+          
           if (cd < cursorRange) {
-            var alpha = Math.pow(1 - cd / cursorRange, 1.5) * 0.35;
+            var alpha = Math.pow(1 - cd / cursorRange, 1.5) * 0.6;
+            
             ctx.beginPath();
             ctx.moveTo(mouse.x, mouse.y);
-            ctx.lineTo(d.x, d.y);
-            ctx.strokeStyle = 'rgba(255, 255, 255, ' + alpha + ')';
-            ctx.lineWidth = 0.8;
+            ctx.lineTo(p.x, p.y);
+            ctx.strokeStyle = cyan + alpha + ')';
+            ctx.lineWidth = 1;
             ctx.stroke();
           }
         }
-
+        
         // Cursor glow
-        var cursorGlow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 120);
-        cursorGlow.addColorStop(0, 'rgba(255, 255, 255, 0.06)');
+        var cursorGlow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 100);
+        cursorGlow.addColorStop(0, cyan + '0.08)');
+        cursorGlow.addColorStop(0.5, cyan + '0.03)');
         cursorGlow.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, 120, 0, Math.PI * 2);
+        ctx.arc(mouse.x, mouse.y, 100, 0, Math.PI * 2);
         ctx.fillStyle = cursorGlow;
         ctx.fill();
-      }
-
-      // Draw dots
-      for (var i = 0; i < dots.length; i++) {
-        var d = dots[i];
-        var color = 'rgba(255, 255, 255, ' + d.a + ')';
-
-        // Glow
-        var glow = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r * 5);
-        glow.addColorStop(0, color);
-        glow.addColorStop(1, 'rgba(0,0,0,0)');
+        
+        // Cursor core dot
         ctx.beginPath();
-        ctx.arc(d.x, d.y, d.r * 5, 0, Math.PI * 2);
-        ctx.fillStyle = glow;
-        ctx.fill();
-
-        // Core
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = color;
+        ctx.arc(mouse.x, mouse.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = cyan + '0.8)';
         ctx.fill();
       }
-
-      requestAnimationFrame(draw);
+      
+      animationId = requestAnimationFrame(draw);
     }
 
+    // Mouse tracking
     document.addEventListener('mousemove', function (e) {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
+    });
+    
+    // Handle visibility change - pause when not visible
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        cancelAnimationFrame(animationId);
+      } else {
+        animationId = requestAnimationFrame(draw);
+      }
     });
 
     window.addEventListener('resize', resize);
     resize();
     draw();
-  }
-
-  // ==================== INTERACTIVE ORBS ====================
-  function initOrbs() {
-    var orbs = document.querySelectorAll('[data-orb]');
-    if (!orbs.length) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    var mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-
-    document.addEventListener('mousemove', function (e) {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    });
-
-    // Orbs react to mouse position - gentle magnetic pull
-    function animateOrbs() {
-      for (var i = 0; i < orbs.length; i++) {
-        var orb = orbs[i];
-        var rect = orb.getBoundingClientRect();
-        var ox = rect.left + rect.width / 2;
-        var oy = rect.top + rect.height / 2;
-
-        var dx = mouse.x - ox;
-        var dy = mouse.y - oy;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-
-        // Subtle magnetic attraction toward cursor
-        if (dist < 500 && dist > 0) {
-          var force = (500 - dist) / 500;
-          var pullX = (dx / dist) * force * 15;
-          var pullY = (dy / dist) * force * 15;
-          var current = orb.style.transform || '';
-          orb.style.transform = 'translate(' + pullX + 'px, ' + pullY + 'px)';
-        } else {
-          orb.style.transform = '';
-        }
-      }
-      requestAnimationFrame(animateOrbs);
-    }
-    animateOrbs();
-  }
-
-  // ==================== PARTICLES ANIMATION ====================
-  function initStars() {
-    var canvas = document.getElementById('bg-canvas');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
-    var W = canvas.width = window.innerWidth;
-    var H = canvas.height = window.innerHeight;
-    var particles = [];
-    var mouse = { x: W/2, y: H/2 };
-
-    // Create flowing orbs
-    for (var i = 0; i < 8; i++) {
-      particles.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        baseX: Math.random() * W,
-        baseY: Math.random() * H,
-        r: 100 + Math.random() * 150,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        phase: Math.random() * Math.PI * 2,
-        speed: 0.3 + Math.random() * 0.3
-      });
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      var time = Date.now() * 0.001;
-
-      // Create flowing gradient background
-      var bgGrad = ctx.createRadialGradient(W * 0.3, H * 0.3, 0, W * 0.5, H * 0.5, W);
-      bgGrad.addColorStop(0, 'rgba(20,20,25,0)');
-      bgGrad.addColorStop(1, 'rgba(10,10,15,0)');
-      
-      // Draw flowing orbs
-      particles.forEach(function(p, i) {
-        p.phase += p.speed * 0.02;
-        
-        // Smooth flowing movement
-        p.x = p.baseX + Math.sin(time * 0.3 + p.phase) * 100;
-        p.y = p.baseY + Math.cos(time * 0.2 + p.phase) * 80;
-        
-        // Move base position slowly
-        p.baseX += p.vx;
-        p.baseY += p.vy;
-        
-        // Wrap
-        if (p.baseX < -p.r) p.baseX = W + p.r;
-        if (p.baseX > W + p.r) p.baseX = -p.r;
-        if (p.baseY < -p.r) p.baseY = H + p.r;
-        if (p.baseY > H + p.r) p.baseY = -p.r;
-
-        // Draw soft gradient orb
-        var grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
-        
-        // Alternate colors - some white, some subtle color
-        if (i % 2 === 0) {
-          grad.addColorStop(0, 'rgba(255,255,255,0.08)');
-          grad.addColorStop(0.5, 'rgba(255,255,255,0.03)');
-          grad.addColorStop(1, 'transparent');
-        } else {
-          grad.addColorStop(0, 'rgba(200,200,220,0.06)');
-          grad.addColorStop(0.5, 'rgba(200,200,220,0.02)');
-          grad.addColorStop(1, 'transparent');
-        }
-        
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = grad;
-        ctx.fill();
-      });
-
-      // Add subtle connecting lines between nearby orbs
-      ctx.strokeStyle = 'rgba(255,255,255,0.02)';
-      ctx.lineWidth = 1;
-      for (var i = 0; i < particles.length; i++) {
-        for (var j = i + 1; j < particles.length; j++) {
-          var dx = particles[i].x - particles[j].x;
-          var dy = particles[i].y - particles[j].y;
-          var dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 300) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      requestAnimationFrame(draw);
-    }
-
-    draw();
-
-    window.addEventListener('resize', function() {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    });
   }
 
   // ==================== CUSTOM CURSOR ====================
@@ -443,7 +362,8 @@
     if (window.innerWidth < 768) return;
 
     var bgCanvas = document.getElementById('bg-canvas');
-    var orbs = document.querySelectorAll('[data-orb]');
+    var cyanGlows = document.querySelectorAll('.cyan-glow');
+    var spiderGrid = document.querySelector('.spider-grid');
     var tick = false;
 
     window.addEventListener('scroll', function () {
@@ -452,15 +372,20 @@
       requestAnimationFrame(function () {
         var scrollY = window.scrollY;
 
-        // Canvas moves at 0.15x speed (background depth)
+        // Canvas moves at 0.1x speed (background layer)
         if (bgCanvas) {
-          bgCanvas.style.transform = 'translateY(' + (scrollY * 0.12) + 'px) scale(1.05)';
+          bgCanvas.style.transform = 'translateY(' + (scrollY * 0.08) + 'px)';
         }
 
-        // Orbs move at different speeds for parallax depth
-        for (var i = 0; i < orbs.length; i++) {
-          var speed = 0.03 + (i * 0.025);
-          orbs[i].style.transform = 'translateY(' + (scrollY * speed) + 'px)';
+        // Cyan glows move slightly for depth
+        cyanGlows.forEach(function(glow, i) {
+          var speed = 0.05 + (i * 0.03);
+          glow.style.transform = 'translateY(' + (scrollY * speed) + 'px)';
+        });
+
+        // Spider grid moves with scroll
+        if (spiderGrid) {
+          spiderGrid.style.transform = 'translateY(' + (scrollY * 0.03) + 'px)';
         }
 
         tick = false;
@@ -660,24 +585,15 @@
   function initBgParallax() {
     var bgLayers = document.getElementById('bg-layers');
     var canvas = document.getElementById('bg-canvas');
-    var orbs = document.querySelectorAll('[data-orb]');
     if (!bgLayers) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (window.innerWidth < 768) return;
 
     window.addEventListener('scroll', function () {
       var scrollY = window.scrollY;
-      var vh = window.innerHeight;
-
       // Canvas moves slower (background layer)
       if (canvas) {
-        canvas.style.transform = 'translateY(' + (scrollY * 0.15) + 'px) translateZ(-50px) scale(1.05)';
-      }
-
-      // Orbs move at different speeds for depth
-      for (var i = 0; i < orbs.length; i++) {
-        var speed = 0.05 + (i * 0.03);
-        orbs[i].style.marginTop = (scrollY * speed) + 'px';
+        canvas.style.transform = 'translateY(' + (scrollY * 0.1) + 'px)';
       }
     }, { passive: true });
   }
@@ -686,6 +602,7 @@
   function initForm() {
     var form = document.getElementById('contact-form');
     if (!form) return;
+    
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var btn = form.querySelector('.btn');
@@ -693,17 +610,39 @@
       btn.innerHTML = 'Sending...';
       btn.disabled = true;
       btn.style.opacity = '0.7';
-      setTimeout(function () {
-        btn.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg> Sent!';
-        btn.style.background = '#22c55e';
+      
+      var formData = new FormData(form);
+      
+      fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(function(response) {
+        if (response.ok) {
+          btn.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg> Sent!';
+          btn.style.background = '#22c55e';
+          btn.style.opacity = '1';
+          form.reset();
+          setTimeout(function () {
+            btn.innerHTML = orig;
+            btn.style.background = '';
+            btn.disabled = false;
+          }, 3000);
+        } else {
+          throw new Error('Form submission failed');
+        }
+      }).catch(function() {
+        btn.innerHTML = 'Error!';
+        btn.style.background = '#ef4444';
         btn.style.opacity = '1';
         setTimeout(function () {
           btn.innerHTML = orig;
           btn.style.background = '';
           btn.disabled = false;
-          form.reset();
-        }, 2500);
-      }, 1200);
+        }, 3000);
+      });
     });
   }
 
