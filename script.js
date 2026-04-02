@@ -1,68 +1,41 @@
 /* ============================================================
-   VARUN VERMA — PORTFOLIO
+   VARUN VERMA — PORTFOLIO V3
+   Free-floating bright dots, interactive orbs, parallax
    ============================================================ */
 (function () {
   'use strict';
 
-  // Initialize everything immediately
-  document.addEventListener('DOMContentLoaded', function () {
-    initParticles();
-    initCursor();
-    initScrollProgress();
-    initHeroEntrance();
-    initReveal();
-    initNavbar();
-    initMobileMenu();
-    initSmoothScroll();
-    initScrollSpy();
-    initForm();
-  });
+  // ==================== LOADING SCREEN ====================
+  var loader = document.getElementById('loader');
+  var barFill = document.getElementById('loader-bar-fill');
+  var progress = 0;
+  var loadTimer;
 
-  // ==================== MODERN INTERACTIVE PARTICLES ====================
-  function initParticles() {
-    try {
-      var container = document.getElementById('particles');
-      if (!container) return;
-      
-      var colors = ['#00fbfb', '#00fbfb', '#ffffff'];
-      var particleCount = window.innerWidth < 768 ? 12 : 20;
-      
-      for (var i = 0; i < particleCount; i++) {
-        var dot = document.createElement('div');
-        dot.className = 'particle-dot';
-        dot.style.left = Math.random() * 100 + '%';
-        dot.style.top = Math.random() * 100 + '%';
-        dot.style.background = colors[Math.floor(Math.random() * colors.length)];
-        dot.style.animationDelay = Math.random() * -20 + 's';
-        dot.style.animationDuration = (15 + Math.random() * 10) + 's';
-        container.appendChild(dot);
+  function startLoader() {
+    // Generate loader particles
+    var pCont = document.getElementById('loader-particles');
+    if (pCont) {
+      for (var i = 0; i < 30; i++) {
+        var p = document.createElement('div');
+        p.className = 'loader-particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() * 3 + 's';
+        p.style.animationDuration = (2 + Math.random() * 2) + 's';
+        pCont.appendChild(p);
       }
-    } catch(e) {}
-  }
-
-  // ==================== CANVAS (DISABLED) ====================
-  function initCanvas() {
-    try {
-      var canvas = document.getElementById('bg-canvas');
-      if (canvas) canvas.style.display = 'none';
-    } catch(e) {}
-  }
-    }, 30);
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    startLoader();
-  });
-
-  // Wrap initAll to prevent any errors from blocking
-  var initTried = false;
-  function safeInit() {
-    if (initTried) return;
-    initTried = true;
-    try { initAll(); } catch(e) {
-      var loader = document.getElementById('loader');
-      if (loader) loader.classList.add('hidden');
     }
+
+    loadTimer = setInterval(function () {
+      progress += 1.5;
+      if (barFill) barFill.style.width = Math.min(progress, 100) + '%';
+      if (progress >= 100) {
+        clearInterval(loadTimer);
+        setTimeout(function () {
+          if (loader) loader.classList.add('hidden');
+          initAll();
+        }, 300);
+      }
+    }, 20);
   }
 
   window.addEventListener('load', function () {
@@ -71,16 +44,20 @@
     clearInterval(loadTimer);
     setTimeout(function () {
       if (loader) loader.classList.add('hidden');
-      safeInit();
-    }, 300);
+      initAll();
+    }, 400);
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    startLoader();
   });
 
   var inited = false;
   function initAll() {
     if (inited) return;
     inited = true;
-    initParticles();
     initCanvas();
+    initOrbs();
     initCursor();
     initScrollProgress();
     initHeroEntrance();
@@ -100,42 +77,11 @@
     initForm();
   }
 
-  // ==================== MODERN INTERACTIVE PARTICLES ====================
-  function initParticles() {
-    try {
-      var container = document.getElementById('particles');
-      if (!container) return;
-      
-      var colors = ['#00fbfb', '#00fbfb', '#ffffff'];
-      var particleCount = window.innerWidth < 768 ? 12 : 20;
-      
-      for (var i = 0; i < particleCount; i++) {
-        var dot = document.createElement('div');
-        dot.className = 'particle-dot';
-        dot.style.left = Math.random() * 100 + '%';
-        dot.style.top = Math.random() * 100 + '%';
-        dot.style.background = colors[Math.floor(Math.random() * colors.length)];
-        dot.style.animationDelay = Math.random() * -20 + 's';
-        dot.style.animationDuration = (15 + Math.random() * 10) + 's';
-        container.appendChild(dot);
-      }
-    } catch(e) {}
-  }
-
-  // ==================== CANVAS (DISABLED) ====================
-  function initCanvas() {
-    try {
-      var canvas = document.getElementById('bg-canvas');
-      if (canvas) canvas.style.display = 'none';
-    } catch(e) {}
-  }
-  }
-
-  // ==================== CANVAS (DISABLED) ====================
+  // ==================== SPIDER-WEB CONSTELLATION PARTICLES ====================
   function initCanvas() {
     var canvas = document.getElementById('bg-canvas');
-    if (canvas) canvas.style.display = 'none';
-  }
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
     var W, H, dots = [], mouse = { x: -9999, y: -9999 };
     var isMobile = false;
 
@@ -215,7 +161,7 @@
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = 'rgba(0, 251, 251, ' + alpha + ')';
+            ctx.strokeStyle = 'rgba(6, 182, 212, ' + alpha + ')';
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -234,7 +180,7 @@
             ctx.beginPath();
             ctx.moveTo(mouse.x, mouse.y);
             ctx.lineTo(d.x, d.y);
-            ctx.strokeStyle = 'rgba(0, 251, 251, ' + alpha + ')';
+            ctx.strokeStyle = 'rgba(6, 182, 212, ' + alpha + ')';
             ctx.lineWidth = 0.8;
             ctx.stroke();
           }
@@ -242,7 +188,7 @@
 
         // Cursor glow
         var cursorGlow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 120);
-        cursorGlow.addColorStop(0, 'rgba(0, 251, 251, 0.06)');
+        cursorGlow.addColorStop(0, 'rgba(6, 182, 212, 0.06)');
         cursorGlow.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.beginPath();
         ctx.arc(mouse.x, mouse.y, 120, 0, Math.PI * 2);
@@ -253,7 +199,7 @@
       // Draw dots
       for (var i = 0; i < dots.length; i++) {
         var d = dots[i];
-        var color = d.hue === 'cyan' ? 'rgba(0, 251, 251, ' + d.a + ')' : 'rgba(220, 230, 255, ' + d.a + ')';
+        var color = d.hue === 'cyan' ? 'rgba(6, 182, 212, ' + d.a + ')' : 'rgba(220, 230, 255, ' + d.a + ')';
 
         // Glow
         var glow = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r * 5);
