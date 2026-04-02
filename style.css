@@ -565,6 +565,53 @@ h3 { font-size: clamp(16px,2.5vw,20px); }
   z-index: -1; filter: blur(25px);
 }
 
+/* Glitch Effect */
+.hero-glitch {
+  position: absolute;
+  bottom: -45px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-h);
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.hero-glitch::before,
+.hero-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.hero-glitch::before {
+  color: #00FFFF;
+  animation: glitch-1 3s infinite linear alternate-reverse;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+.hero-glitch::after {
+  color: #FF00FF;
+  animation: glitch-2 2s infinite linear alternate-reverse;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+@keyframes glitch-1 {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, 2px); }
+  80% { transform: translate(1px, -2px); }
+}
+@keyframes glitch-2 {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(2px, -1px); }
+  40% { transform: translate(-2px, 1px); }
+  60% { transform: translate(1px, -2px); }
+  80% { transform: translate(-1px, 2px); }
+}
+
 /* Float Cards */
 .hero-float-card {
   position: absolute; display: flex; align-items: center; gap: 7px;
@@ -828,6 +875,7 @@ h3 { font-size: clamp(16px,2.5vw,20px); }
   .contact-intro { text-align: left; }
   .hero-cta { flex-direction: row; justify-content: center; }
   .tl-top { flex-direction: row; justify-content: space-between; align-items: flex-start; }
+  .hero-glitch { font-size: 18px; bottom: -50px; }
 }
 
 /* ============================================================
