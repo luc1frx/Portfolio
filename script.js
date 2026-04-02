@@ -228,7 +228,7 @@
     animateOrbs();
   }
 
-  // ==================== STARS & MOON ====================
+  // ==================== STARS ====================
   function initStars() {
     var canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
@@ -236,10 +236,9 @@
     var W = canvas.width = window.innerWidth;
     var H = canvas.height = window.innerHeight;
     var stars = [];
-    var moon = { x: W * 0.72, y: H * 0.45, r: 90, phase: 0 };
 
     // Create stars
-    for (var i = 0; i < 120; i++) {
+    for (var i = 0; i < 100; i++) {
       stars.push({
         x: Math.random() * W,
         y: Math.random() * H,
@@ -262,79 +261,6 @@
         ctx.fill();
       });
 
-      // Moon glow
-      var glow = ctx.createRadialGradient(moon.x, moon.y, 0, moon.x, moon.y, moon.r * 2);
-      glow.addColorStop(0, 'rgba(255,255,255,0.12)');
-      glow.addColorStop(0.4, 'rgba(255,255,255,0.04)');
-      glow.addColorStop(1, 'transparent');
-      ctx.beginPath();
-      ctx.arc(moon.x, moon.y, moon.r * 2, 0, Math.PI * 2);
-      ctx.fillStyle = glow;
-      ctx.fill();
-
-      // Moon base (dark side)
-      moon.phase += 0.002;
-      var rotX = Math.sin(moon.phase) * 20;
-      
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(moon.x, moon.y, moon.r, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.clip();
-
-      // Moon surface gradient
-      var moonGrad = ctx.createLinearGradient(moon.x - moon.r, moon.y - moon.r, moon.x + moon.r, moon.y + moon.r);
-      moonGrad.addColorStop(0, '#2a2a35');
-      moonGrad.addColorStop(0.5, '#3d3d4a');
-      moonGrad.addColorStop(1, '#252530');
-      ctx.beginPath();
-      ctx.arc(moon.x, moon.y, moon.r, 0, Math.PI * 2);
-      ctx.fillStyle = moonGrad;
-      ctx.fill();
-
-      // Moon craters
-      var craters = [
-        {x: -30 + rotX, y: -20, r: 18},
-        {x: 20 + rotX, y: 10, r: 12},
-        {x: -10 + rotX, y: 35, r: 15},
-        {x: 40 + rotX, y: -30, r: 10},
-        {x: -35 + rotX, y: 15, r: 8}
-      ];
-      
-      craters.forEach(function(c) {
-        ctx.beginPath();
-        ctx.arc(moon.x + c.x, moon.y + c.y, c.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0,0,0,0.3)';
-        ctx.fill();
-      });
-
-      // Moon edge highlight
-      ctx.beginPath();
-      ctx.arc(moon.x, moon.y, moon.r, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-
-      ctx.restore();
-
-      // Crescent shadow (like alcove)
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(moon.x, moon.y, moon.r, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.clip();
-
-      // Dark crescent on right
-      var shadowGrad = ctx.createLinearGradient(moon.x + moon.r, moon.y - moon.r, moon.x - moon.r, moon.y + moon.r);
-      shadowGrad.addColorStop(0, 'rgba(0,0,0,0.7)');
-      shadowGrad.addColorStop(0.5, 'rgba(0,0,0,0.2)');
-      shadowGrad.addColorStop(1, 'transparent');
-      ctx.beginPath();
-      ctx.arc(moon.x - moon.r * 0.3, moon.y, moon.r * 1.1, 0, Math.PI * 2);
-      ctx.fillStyle = shadowGrad;
-      ctx.fill();
-      ctx.restore();
-
       requestAnimationFrame(draw);
     }
 
@@ -343,8 +269,6 @@
     window.addEventListener('resize', function() {
       W = canvas.width = window.innerWidth;
       H = canvas.height = window.innerHeight;
-      moon.x = W * 0.72;
-      moon.y = H * 0.45;
     });
   }
 
