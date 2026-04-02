@@ -236,18 +236,20 @@
     var W = canvas.width = window.innerWidth;
     var H = canvas.height = window.innerHeight;
     var particles = [];
+    var mouse = { x: W/2, y: H/2 };
 
-    // Create floating colorful particles
-    for (var i = 0; i < 25; i++) {
+    // Create flowing orbs
+    for (var i = 0; i < 8; i++) {
       particles.push({
         x: Math.random() * W,
         y: Math.random() * H,
-        r: 15 + Math.random() * 25,
-        vx: (Math.random() - 0.5) * 0.8,
-        vy: (Math.random() - 0.5) * 0.8,
-        alpha: 0.03 + Math.random() * 0.06,
-        color: Math.random() > 0.5 ? '255,255,255' : '200,200,210',
-        blur: 40 + Math.random() * 30
+        baseX: Math.random() * W,
+        baseY: Math.random() * H,
+        r: 100 + Math.random() * 150,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.3 + Math.random() * 0.3
       });
     }
 
@@ -255,33 +257,65 @@
       ctx.clearRect(0, 0, W, H);
       var time = Date.now() * 0.001;
 
-      // Draw particles with blur effect
-      particles.forEach(function(p) {
-        // Move
-        p.x += p.vx;
-        p.y += p.vy;
+      // Create flowing gradient background
+      var bgGrad = ctx.createRadialGradient(W * 0.3, H * 0.3, 0, W * 0.5, H * 0.5, W);
+      bgGrad.addColorStop(0, 'rgba(20,20,25,0)');
+      bgGrad.addColorStop(1, 'rgba(10,10,15,0)');
+      
+      // Draw flowing orbs
+      particles.forEach(function(p, i) {
+        p.phase += p.speed * 0.02;
         
-        // Gentle sine wave motion
-        p.x += Math.sin(time * 0.5 + p.r) * 0.3;
-        p.y += Math.cos(time * 0.4 + p.r) * 0.3;
+        // Smooth flowing movement
+        p.x = p.baseX + Math.sin(time * 0.3 + p.phase) * 100;
+        p.y = p.baseY + Math.cos(time * 0.2 + p.phase) * 80;
+        
+        // Move base position slowly
+        p.baseX += p.vx;
+        p.baseY += p.vy;
+        
+        // Wrap
+        if (p.baseX < -p.r) p.baseX = W + p.r;
+        if (p.baseX > W + p.r) p.baseX = -p.r;
+        if (p.baseY < -p.r) p.baseY = H + p.r;
+        if (p.baseY > H + p.r) p.baseY = -p.r;
 
-        // Wrap around
-        if (p.x < -p.r * 2) p.x = W + p.r * 2;
-        if (p.x > W + p.r * 2) p.x = -p.r * 2;
-        if (p.y < -p.r * 2) p.y = H + p.r * 2;
-        if (p.y > H + p.r * 2) p.y = -p.r * 2;
-
-        // Draw glow
-        var glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
-        glow.addColorStop(0, 'rgba(' + p.color + ',' + p.alpha + ')');
-        glow.addColorStop(0.4, 'rgba(' + p.color + ',' + p.alpha * 0.5 + ')');
-        glow.addColorStop(1, 'transparent');
+        // Draw soft gradient orb
+        var grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
+        
+        // Alternate colors - some white, some subtle color
+        if (i % 2 === 0) {
+          grad.addColorStop(0, 'rgba(255,255,255,0.08)');
+          grad.addColorStop(0.5, 'rgba(255,255,255,0.03)');
+          grad.addColorStop(1, 'transparent');
+        } else {
+          grad.addColorStop(0, 'rgba(200,200,220,0.06)');
+          grad.addColorStop(0.5, 'rgba(200,200,220,0.02)');
+          grad.addColorStop(1, 'transparent');
+        }
         
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = glow;
+        ctx.fillStyle = grad;
         ctx.fill();
       });
+
+      // Add subtle connecting lines between nearby orbs
+      ctx.strokeStyle = 'rgba(255,255,255,0.02)';
+      ctx.lineWidth = 1;
+      for (var i = 0; i < particles.length; i++) {
+        for (var j = i + 1; j < particles.length; j++) {
+          var dx = particles[i].x - particles[j].x;
+          var dy = particles[i].y - particles[j].y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 300) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
 
       requestAnimationFrame(draw);
     }
