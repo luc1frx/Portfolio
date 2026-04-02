@@ -191,13 +191,8 @@ button { border: none; background: none; font: inherit; color: inherit; cursor: 
 @keyframes charWave { 0%,100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
 .loader-space { display: inline-block; width: 6px; }
 
-/* ==================== BACKGROUND ==================== */
 .bg-layers {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
-}
-#bg-canvas {
-  position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1;
-  pointer-events: auto;
+  display: none;
 }
 .bg-mesh {
   position: absolute; inset: 0; z-index: 0;

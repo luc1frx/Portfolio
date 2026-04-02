@@ -15,7 +15,7 @@
   function initAll() {
     if (inited) return;
     inited = true;
-    initStars();
+    // No background animation - clean minimal
     initCursor();
     initScrollProgress();
     initHeroEntrance();
