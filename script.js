@@ -15,8 +15,8 @@
   function initAll() {
     if (inited) return;
     inited = true;
-    initCanvas();
-    initOrbs();
+    // initCanvas(); // Disabled - minimal design
+    // initOrbs(); // Disabled - minimal design
     initCursor();
     initScrollProgress();
     initHeroEntrance();
