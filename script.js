@@ -236,8 +236,8 @@
     var W = canvas.width = window.innerWidth;
     var H = canvas.height = window.innerHeight;
     var stars = [];
-    var planet = { x: W * 0.75, y: H * 0.5, r: 60, angle: 0 };
-    var orbitRadius = 100;
+    var planet = { x: W * 0.75, y: H * 0.5, r: 70, angle: 0 };
+    var offset = 0;
 
     // Create stars
     for (var i = 0; i < 150; i++) {
@@ -262,50 +262,77 @@
         ctx.fill();
       });
 
-      // Planet glow
-      var glow = ctx.createRadialGradient(planet.x, planet.y, 0, planet.x, planet.y, planet.r * 2);
-      glow.addColorStop(0, 'rgba(255,255,255,0.15)');
-      glow.addColorStop(0.5, 'rgba(255,255,255,0.05)');
+      // Planet glow (outer)
+      var glow = ctx.createRadialGradient(planet.x, planet.y, 0, planet.x, planet.y, planet.r * 2.5);
+      glow.addColorStop(0, 'rgba(100,150,255,0.08)');
+      glow.addColorStop(0.6, 'rgba(50,100,200,0.03)');
       glow.addColorStop(1, 'transparent');
       ctx.beginPath();
-      ctx.arc(planet.x, planet.y, planet.r * 2, 0, Math.PI * 2);
+      ctx.arc(planet.x, planet.y, planet.r * 2.5, 0, Math.PI * 2);
       ctx.fillStyle = glow;
       ctx.fill();
 
-      // Planet body
+      // Earth-like planet body
       ctx.beginPath();
       ctx.arc(planet.x, planet.y, planet.r, 0, Math.PI * 2);
-      ctx.fillStyle = '#111';
+      var earthGrad = ctx.createLinearGradient(planet.x - planet.r, planet.y - planet.r, planet.x + planet.r, planet.y + planet.r);
+      earthGrad.addColorStop(0, '#1a4d2e');
+      earthGrad.addColorStop(0.3, '#2d6b45');
+      earthGrad.addColorStop(0.5, '#3d8b5a');
+      earthGrad.addColorStop(0.7, '#2d6b45');
+      earthGrad.addColorStop(1, '#1a4d2e');
+      ctx.fillStyle = earthGrad;
       ctx.fill();
-      ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-      ctx.lineWidth = 2;
-      ctx.stroke();
 
-      // Planet ring
+      // Continents (simple shapes)
       ctx.save();
-      ctx.translate(planet.x, planet.y);
-      ctx.rotate(Math.PI * 0.15);
       ctx.beginPath();
-      ctx.ellipse(0, 0, planet.r * 1.8, planet.r * 0.3, 0, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
+      ctx.arc(planet.x, planet.y, planet.r, 0, Math.PI * 2);
+      ctx.clip();
+      
+      offset += 0.3;
+      var continents = [
+        {x: -20 + offset, y: -15, w: 30, h: 20},
+        {x: 15 + offset, y: -25, w: 25, h: 15},
+        {x: -10 + offset, y: 10, w: 35, h: 25},
+        {x: 20 + offset, y: 5, w: 20, h: 30},
+        {x: -30 + offset, y: -30, w: 15, h: 10}
+      ];
+      
+      continents.forEach(function(c) {
+        var cx = c.x % 60 - 30;
+        ctx.beginPath();
+        ctx.ellipse(planet.x + cx, planet.y + c.y, c.w/2, c.h/2, 0, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(45,120,70,0.8)';
+        ctx.fill();
+      });
+      
+      // Cloud wisps
+      for (var i = 0; i < 5; i++) {
+        var cx = (Math.sin(time * 0.5 + i) * 30 + offset * 0.5) % 80 - 40;
+        var cy = Math.sin(time * 0.3 + i * 2) * 20;
+        ctx.beginPath();
+        ctx.ellipse(planet.x + cx, planet.y + cy, 15 + i * 3, 5, time * 0.2 + i, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.15)';
+        ctx.fill();
+      }
+      
       ctx.restore();
 
-      // Orbiting element
-      planet.angle += 0.01;
-      var ox = planet.x + Math.cos(planet.angle) * orbitRadius;
-      var oy = planet.y + Math.sin(planet.angle) * orbitRadius * 0.5;
+      // Light side (daylight effect)
       ctx.beginPath();
-      ctx.arc(ox, oy, 4, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255,255,255,0.8)';
+      ctx.arc(planet.x - planet.r * 0.3, planet.y, planet.r * 1.1, Math.PI * 0.8, Math.PI * 1.2);
+      var lightGrad = ctx.createLinearGradient(planet.x - planet.r, planet.y, planet.x + planet.r, planet.y);
+      lightGrad.addColorStop(0, 'rgba(255,255,255,0.25)');
+      lightGrad.addColorStop(1, 'transparent');
+      ctx.fillStyle = lightGrad;
       ctx.fill();
 
-      // Orbit line
+      // Atmosphere edge
       ctx.beginPath();
-      ctx.ellipse(planet.x, planet.y, orbitRadius, orbitRadius * 0.5, Math.PI * 0.15, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
-      ctx.lineWidth = 1;
+      ctx.arc(planet.x, planet.y, planet.r, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(150,200,255,0.3)';
+      ctx.lineWidth = 2;
       ctx.stroke();
 
       requestAnimationFrame(draw);
