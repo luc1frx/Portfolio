@@ -81,6 +81,10 @@
   function initCanvas() {
     var canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
+    // Disable canvas for better performance - use CSS particles instead
+    canvas.style.display = 'none';
+    return;
+    
     var ctx = canvas.getContext('2d');
     var W, H, dots = [], mouse = { x: -9999, y: -9999 };
     var isMobile = false;
