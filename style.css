@@ -41,38 +41,15 @@ button { border: none; background: none; font: inherit; color: inherit; cursor: 
   position: fixed; inset: 0; z-index: 99999;
   background: var(--bg);
   display: flex; align-items: center; justify-content: center;
-  transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), visibility 0.8s;
-  perspective: 800px;
 }
-.loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s; }
+.loader-inner { text-align: center; }
+.loader-logo { font-family: var(--font-h); font-size: 2.5rem; font-weight: 700; color: var(--t1); margin-bottom: 30px; }
+.loader-logo .dot { color: var(--accent); }
+.loader-bar { width: 200px; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; margin: 0 auto; }
+.loader-bar-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.3s; }
 
-/* Grid background */
-.loader-grid-bg {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(0, 251, 251,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 251, 251,0.04) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: gridMove 4s linear infinite;
-  mask-image: radial-gradient(circle at center, black 30%, transparent 70%);
-  -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 70%);
-}
-@keyframes gridMove { to { background-position: 50px 50px; } }
-
-/* Corner accents */
-.loader-corner {
-  position: absolute; width: 40px; height: 40px;
-  border: 2px solid rgba(0, 251, 251,0.3);
-  animation: cornerPulse 2s ease-in-out infinite;
-}
-.loader-corner.tl { top: 30px; left: 30px; border-right: none; border-bottom: none; border-radius: 4px 0 0 0; }
-.loader-corner.tr { top: 30px; right: 30px; border-left: none; border-bottom: none; border-radius: 0 4px 0 0; }
-.loader-corner.bl { bottom: 30px; left: 30px; border-right: none; border-top: none; border-radius: 0 0 0 4px; }
-.loader-corner.br { bottom: 30px; right: 30px; border-left: none; border-top: none; border-radius: 0 0 4px 0; }
-@keyframes cornerPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 0.8; } }
-
-/* Loader particles */
-.loader-particles {
+/* ==================== SCROLL PROGRESS ==================== */
   position: absolute; inset: 0; overflow: hidden; pointer-events: none;
 }
 .loader-particle {

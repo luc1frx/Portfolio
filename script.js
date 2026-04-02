@@ -12,30 +12,14 @@
   var loadTimer;
 
   function startLoader() {
-    // Generate loader particles
-    var pCont = document.getElementById('loader-particles');
-    if (pCont) {
-      for (var i = 0; i < 30; i++) {
-        var p = document.createElement('div');
-        p.className = 'loader-particle';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.animationDelay = Math.random() * 3 + 's';
-        p.style.animationDuration = (2 + Math.random() * 2) + 's';
-        pCont.appendChild(p);
-      }
-    }
-
+    // Simple loader - just animate the bar
     loadTimer = setInterval(function () {
-      progress += 1.5;
-      if (barFill) barFill.style.width = Math.min(progress, 100) + '%';
-      if (progress >= 100) {
+      progress += 5;
+      if (barFill) barFill.style.width = Math.min(progress, 90) + '%';
+      if (progress >= 90) {
         clearInterval(loadTimer);
-        setTimeout(function () {
-          if (loader) loader.classList.add('hidden');
-          initAll();
-        }, 300);
       }
-    }, 20);
+    }, 30);
   }
 
   document.addEventListener('DOMContentLoaded', function () {
