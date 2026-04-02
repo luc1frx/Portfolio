@@ -228,23 +228,26 @@
     animateOrbs();
   }
 
-  // ==================== STARS ====================
+  // ==================== PARTICLES ANIMATION ====================
   function initStars() {
     var canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
     var ctx = canvas.getContext('2d');
     var W = canvas.width = window.innerWidth;
     var H = canvas.height = window.innerHeight;
-    var stars = [];
+    var particles = [];
 
-    // Create stars
-    for (var i = 0; i < 100; i++) {
-      stars.push({
+    // Create floating colorful particles
+    for (var i = 0; i < 25; i++) {
+      particles.push({
         x: Math.random() * W,
         y: Math.random() * H,
-        r: Math.random() * 1.2 + 0.3,
-        twinkle: Math.random() * Math.PI * 2,
-        speed: 0.5 + Math.random() * 1.5
+        r: 15 + Math.random() * 25,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: (Math.random() - 0.5) * 0.8,
+        alpha: 0.03 + Math.random() * 0.06,
+        color: Math.random() > 0.5 ? '255,255,255' : '200,200,210',
+        blur: 40 + Math.random() * 30
       });
     }
 
@@ -252,12 +255,31 @@
       ctx.clearRect(0, 0, W, H);
       var time = Date.now() * 0.001;
 
-      // Stars (twinkling)
-      stars.forEach(function(s) {
-        var alpha = 0.25 + Math.sin(time * s.speed + s.twinkle) * 0.2;
+      // Draw particles with blur effect
+      particles.forEach(function(p) {
+        // Move
+        p.x += p.vx;
+        p.y += p.vy;
+        
+        // Gentle sine wave motion
+        p.x += Math.sin(time * 0.5 + p.r) * 0.3;
+        p.y += Math.cos(time * 0.4 + p.r) * 0.3;
+
+        // Wrap around
+        if (p.x < -p.r * 2) p.x = W + p.r * 2;
+        if (p.x > W + p.r * 2) p.x = -p.r * 2;
+        if (p.y < -p.r * 2) p.y = H + p.r * 2;
+        if (p.y > H + p.r * 2) p.y = -p.r * 2;
+
+        // Draw glow
+        var glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
+        glow.addColorStop(0, 'rgba(' + p.color + ',' + p.alpha + ')');
+        glow.addColorStop(0.4, 'rgba(' + p.color + ',' + p.alpha * 0.5 + ')');
+        glow.addColorStop(1, 'transparent');
+        
         ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255,255,255,' + alpha + ')';
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = glow;
         ctx.fill();
       });
 
