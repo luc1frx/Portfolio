@@ -57,7 +57,6 @@
     if (inited) return;
     inited = true;
     initCanvas();
-    initOrbs();
     initCursor();
     initScrollProgress();
     initHeroEntrance();
@@ -74,6 +73,7 @@
     initScrollSpy();
     initParallax();
     initBgParallax();
+    initBgParallax();
     initForm();
   }
 
@@ -81,9 +81,11 @@
   function initCanvas() {
     var canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { canvas.style.display = 'none'; return; }
+    
     var ctx = canvas.getContext('2d');
     var W, H, dots = [], mouse = { x: -9999, y: -9999 };
-    var isMobile = false;
+    var isMobile = window.innerWidth < 768;
 
     function resize() {
       W = canvas.width = window.innerWidth;
@@ -94,16 +96,15 @@
 
     function createDots() {
       dots = [];
-      var count = isMobile ? 30 : Math.min(70, Math.floor((W * H) / 18000));
+      var count = isMobile ? 25 : 40;
       for (var i = 0; i < count; i++) {
         dots.push({
           x: Math.random() * W,
           y: Math.random() * H,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
-          r: Math.random() * 2 + 0.8,
-          a: Math.random() * 0.5 + 0.3,
-          hue: Math.random() > 0.5 ? 'cyan' : 'white'
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          r: Math.random() * 1.5 + 1,
+          a: Math.random() * 0.4 + 0.2
         });
       }
     }
@@ -112,49 +113,105 @@
       ctx.clearRect(0, 0, W, H);
       var time = Date.now() * 0.001;
 
-      // Update positions
       for (var i = 0; i < dots.length; i++) {
         var d = dots[i];
         d.x += d.vx;
         d.y += d.vy;
+        d.x += Math.sin(time * 0.3 + i * 0.5) * 0.1;
+        d.y += Math.cos(time * 0.3 + i * 0.5) * 0.1;
 
-        // Gentle sine drift
-        d.x += Math.sin(time * 0.5 + i * 0.7) * 0.15;
-        d.y += Math.cos(time * 0.4 + i * 0.5) * 0.15;
-
-        // Mouse attraction (spider-web: particles pull toward cursor)
         var dx = mouse.x - d.x;
         var dy = mouse.y - d.y;
         var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 200 && dist > 0) {
-          var force = (200 - dist) / 200;
-          d.vx += (dx / dist) * force * 0.08;
-          d.vy += (dy / dist) * force * 0.08;
+        if (dist < 150 && dist > 0) {
+          var force = (150 - dist) / 150;
+          d.vx += (dx / dist) * force * 0.05;
+          d.vy += (dy / dist) * force * 0.05;
         }
 
-        // Damping
-        d.vx *= 0.995;
-        d.vy *= 0.995;
+        d.vx *= 0.99;
+        d.vy *= 0.99;
 
-        // Wrap
         if (d.x < -10) d.x = W + 10;
         if (d.x > W + 10) d.x = -10;
         if (d.y < -10) d.y = H + 10;
         if (d.y > H + 10) d.y = -10;
       }
 
-      // Draw connections BETWEEN nearby particles (web effect)
-      var maxDist = isMobile ? 100 : 140;
+      var maxDist = isMobile ? 80 : 120;
       for (var i = 0; i < dots.length; i++) {
         for (var j = i + 1; j < dots.length; j++) {
           var a = dots[i], b = dots[j];
           var cdx = b.x - a.x, cdy = b.y - a.y;
           var cd = Math.sqrt(cdx * cdx + cdy * cdy);
           if (cd < maxDist) {
-            var alpha = Math.pow(1 - cd / maxDist, 2) * 0.15;
-            // Brighten connections near mouse
-            var midX = (a.x + b.x) / 2, midY = (a.y + b.y) / 2;
-            var mDist = Math.sqrt((midX - mouse.x) ** 2 + (midY - mouse.y) ** 2);
+            var alpha = Math.pow(1 - cd / maxDist, 2) * 0.12;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = 'rgba(0, 251, 251, ' + alpha + ')';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      if (mouse.x > -9000) {
+        var cursorRange = isMobile ? 150 : 180;
+        for (var i = 0; i < dots.length; i++) {
+          var d = dots[i];
+          var cdx = mouse.x - d.x, cdy = mouse.y - d.y;
+          var cd = Math.sqrt(cdx * cdx + cdy * cdy);
+          if (cd < cursorRange) {
+            var alpha = Math.pow(1 - cd / cursorRange, 1.5) * 0.25;
+            ctx.beginPath();
+            ctx.moveTo(mouse.x, mouse.y);
+            ctx.lineTo(d.x, d.y);
+            ctx.strokeStyle = 'rgba(0, 251, 251, ' + alpha + ')';
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+
+      for (var i = 0; i < dots.length; i++) {
+        var d = dots[i];
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0, 251, 251, ' + d.a + ')';
+        ctx.fill();
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    document.addEventListener('mousemove', function (e) {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    document.addEventListener('mouseleave', function () {
+      mouse.x = -9999;
+      mouse.y = -9999;
+    });
+
+    draw();
+  }
+
+  // ==================== PARALLAX BACKGROUND ====================
+  function initBgParallax() {
+    var bgLayers = document.getElementById('bg-layers');
+    if (!bgLayers) return;
+    if (window.innerWidth < 768) return;
+    
+    window.addEventListener('scroll', function () {
+      var scrollY = window.scrollY;
+      bgLayers.style.transform = 'translateY(' + (scrollY * 0.15) + 'px)';
+    });
+  }
             if (mDist < 150) {
               alpha = Math.pow(1 - cd / maxDist, 2) * 0.4;
             }
