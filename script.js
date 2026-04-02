@@ -15,8 +15,7 @@
   function initAll() {
     if (inited) return;
     inited = true;
-    // initCanvas(); // Disabled - minimal design
-    // initOrbs(); // Disabled - minimal design
+    initStars();
     initCursor();
     initScrollProgress();
     initHeroEntrance();
@@ -227,6 +226,99 @@
       requestAnimationFrame(animateOrbs);
     }
     animateOrbs();
+  }
+
+  // ==================== STARS & PLANET ====================
+  function initStars() {
+    var canvas = document.getElementById('bg-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W = canvas.width = window.innerWidth;
+    var H = canvas.height = window.innerHeight;
+    var stars = [];
+    var planet = { x: W * 0.75, y: H * 0.5, r: 60, angle: 0 };
+    var orbitRadius = 100;
+
+    // Create stars
+    for (var i = 0; i < 150; i++) {
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.5 + 0.5,
+        twinkle: Math.random() * Math.PI * 2
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      var time = Date.now() * 0.001;
+
+      // Stars
+      stars.forEach(function(s) {
+        var alpha = 0.3 + Math.sin(time * 2 + s.twinkle) * 0.3;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,' + alpha + ')';
+        ctx.fill();
+      });
+
+      // Planet glow
+      var glow = ctx.createRadialGradient(planet.x, planet.y, 0, planet.x, planet.y, planet.r * 2);
+      glow.addColorStop(0, 'rgba(255,255,255,0.15)');
+      glow.addColorStop(0.5, 'rgba(255,255,255,0.05)');
+      glow.addColorStop(1, 'transparent');
+      ctx.beginPath();
+      ctx.arc(planet.x, planet.y, planet.r * 2, 0, Math.PI * 2);
+      ctx.fillStyle = glow;
+      ctx.fill();
+
+      // Planet body
+      ctx.beginPath();
+      ctx.arc(planet.x, planet.y, planet.r, 0, Math.PI * 2);
+      ctx.fillStyle = '#111';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Planet ring
+      ctx.save();
+      ctx.translate(planet.x, planet.y);
+      ctx.rotate(Math.PI * 0.15);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, planet.r * 1.8, planet.r * 0.3, 0, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.restore();
+
+      // Orbiting element
+      planet.angle += 0.01;
+      var ox = planet.x + Math.cos(planet.angle) * orbitRadius;
+      var oy = planet.y + Math.sin(planet.angle) * orbitRadius * 0.5;
+      ctx.beginPath();
+      ctx.arc(ox, oy, 4, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,0.8)';
+      ctx.fill();
+
+      // Orbit line
+      ctx.beginPath();
+      ctx.ellipse(planet.x, planet.y, orbitRadius, orbitRadius * 0.5, Math.PI * 0.15, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    window.addEventListener('resize', function() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      planet.x = W * 0.75;
+      planet.y = H * 0.5;
+    });
   }
 
   // ==================== CUSTOM CURSOR ====================
